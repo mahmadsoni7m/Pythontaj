@@ -3,8 +3,8 @@
 :root{
   --bg:#070913;--s1:#0F1429;--s2:#161C38;--s3:#1F2749;--line:rgba(255,255,255,.08);
   --text:#F5F7FF;--muted:#929CC2;--dim:#5E688F;
-  --p1:#7C5CFF;--p2:#B05CFF;--pink:#FF6FB5;--gold:#FFC53D;--green:#35E0A1;--red:#FF6B81;--blue:#4DA3FF;
-  --grad:linear-gradient(135deg,#7C5CFF 0%,#B05CFF 55%,#FF6FB5 100%);
+  --p1:#6E5CFF;--p2:#7C5CFF;--pink:#8A7CFF;
+--grad:linear-gradient(135deg,#5B4CFF 0%,#6E5CFF 50%,#7C5CFF 100%);
   --code:#0A0E20;--shadow:0 1px 0 rgba(255,255,255,.05) inset,0 12px 32px rgba(0,0,0,.38);
   --r:24px;--r2:18px;--r3:12px;--tab:68px;--dock:84px;
   --kw:#C792EA;--str:#A5E075;--num:#F78C6C;--com:#6B7394;--fn:#82AAFF;--bi:#7FDBCA;--def:#FFCB6B;
