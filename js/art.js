@@ -37,4 +37,4 @@
   }
   window.Art = { mascot, heroCardArt, scene: (i) => scenes[i](), confetti };
 })();
-                                                                                
+                                                   
