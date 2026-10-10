@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "lesson-039",
+  "number": 39,
+  "module": "m7",
+  "title": "Меросбарӣ",
+  "description": "Синфи нав аз синфи мавҷуда.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Мерос гирифтан",
+    "Истифодаи super()",
+    "Иваз кардани метод"
+  ],
+  "explanation": [
+    "Меросбарӣ имкон медиҳад, ки синфи нав (фарзанд) аз синфи мавҷуда (падар) хусусиятҳоро гирад: class Dog(Animal):.",
+    "Фарзанд ҳамаи методҳои падарро дорад ва метавонад онҳоро иваз кунад. super() ба падар даъват мекунад, масалан дар __init__.",
+    "Мерос кодро такрор намекунад ва иерархияи мантиқӣ месозад."
+  ],
+  "examples": [
+    {
+      "title": "Мерос",
+      "code": "class Animal:\n    def speak(self):\n        print(\"Садо\")\n\nclass Dog(Animal):\n    pass\n\nDog().speak()",
+      "stdin": "",
+      "steps": [
+        "Dog метод speak-ро аз Animal гирифт."
+      ],
+      "output": "Садо\n"
+    },
+    {
+      "title": "super ва иваз",
+      "code": "class Animal:\n    def __init__(self, name):\n        self.name = name\n    def speak(self):\n        print(self.name, \"садо медиҳад\")\n\nclass Cat(Animal):\n    def __init__(self, name):\n        super().__init__(name)\n    def speak(self):\n        print(self.name, \"мяу мекунад\")\n\nCat(\"Мурка\").speak()",
+      "stdin": "",
+      "steps": [
+        "super().__init__ падарро даъват мекунад.",
+        "speak дар Cat иваз шуд."
+      ],
+      "output": "Мурка мяу мекунад\n"
+    }
+  ],
+  "notes": [
+    "issubclass ва isinstance мерос месанҷанд.",
+    "Python меросбарии бисёрқатора низ дорад."
+  ],
+  "mistakes": [
+    "Фаромӯш кардани super().__init__(...) ҳангоме ки падар маълумот мехоҳад.",
+    "Мерос барои ҳама чиз лозим нест."
+  ],
+  "exercise": {
+    "prompt": "Синфи Animal бо speak() (Садо) созед ва Dog(Animal), ки speak()-ро ба Гав иваз мекунад. Dog().speak()-ро бароред.",
+    "starter": "",
+    "solution": "class Animal:\n    def speak(self):\n        print(\"Садо\")\n\nclass Dog(Animal):\n    def speak(self):\n        print(\"Гав\")\n\nDog().speak()",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "Гав\n"
+      }
+    ],
+    "hint": "class Dog(Animal): def speak(self):",
+    "mustContain": [
+      "class",
+      "Animal"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "Дар class B(A) кадом синф падар аст?",
+      "options": [
+        "A",
+        "B",
+        "Ҳарду"
+      ],
+      "answer": 0,
+      "explanation": "A — падар, B — фарзанд."
+    },
+    {
+      "q": "super() чӣ мекунад?",
+      "options": [
+        "Ба падар мерасад",
+        "Объект месозад",
+        "Хато медиҳад"
+      ],
+      "answer": 0,
+      "explanation": "Ба методҳои падар дастрасӣ медиҳад."
+    },
+    {
+      "q": "Агар метод дар фарзанд иваз шавад, кадом иҷро мешавад?",
+      "options": [
+        "Методи фарзанд",
+        "Методи падар",
+        "Ҳарду"
+      ],
+      "answer": 0,
+      "explanation": "Методи фарзанд методи падарро иваз мекунад."
+    }
+  ]
+}

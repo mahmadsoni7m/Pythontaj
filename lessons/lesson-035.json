@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "lesson-035",
+  "number": 35,
+  "module": "m6",
+  "title": "Насби китобхонаҳо",
+  "description": "pip ва китобхонаҳои беруна.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Фаҳмидани pip",
+    "Донистани фарқи китобхонаи стандартӣ ва беруна",
+    "Истифодаи китобхонаҳои тайёри Python дар PythonТаҷ"
+  ],
+  "explanation": [
+    "Китобхонаи беруна — модуле, ки бо Python омада наметавад ва аз Python Package Index (PyPI) насб мешавад. Фармон: pip install ном. Масалан: pip install requests.",
+    "Ин фармонро дар терминали компютер менависанд, на дар худи барнома. Дар PythonТаҷ танҳо китобхонаи стандартии Python дастрас аст (math, random, datetime, json, statistics ва ғайра); насби pip дар дохили барнома дастгирӣ намешавад.",
+    "Китобхонаи стандартӣ барои омӯзиш кифоя аст. Китобхонаҳои беруна баъдтар дар компютер истифода мешаванд."
+  ],
+  "examples": [
+    {
+      "title": "datetime",
+      "code": "from datetime import date\nd = date(2026, 10, 9)\nprint(d.year, d.month, d.day)\nprint(d.weekday())",
+      "stdin": "",
+      "steps": [
+        "Модули datetime бо санаҳо кор мекунад.",
+        "weekday() рақами рӯзи ҳафтаро медиҳад (0 — душанбе)."
+      ],
+      "output": "2026 10 9\n4\n"
+    },
+    {
+      "title": "json ва statistics",
+      "code": "import json, statistics\nprint(json.dumps({\"a\": 1}))\nprint(statistics.mean([2, 4, 6]))",
+      "stdin": "",
+      "steps": [
+        "json.dumps луғатро ба матн табдил медиҳад.",
+        "statistics.mean миёнаро ҳисоб мекунад."
+      ],
+      "output": "{\"a\": 1}\n4\n"
+    }
+  ],
+  "notes": [
+    "pip бо Python-и компютерӣ меояд.",
+    "Китобхонаро танҳо аз сарчашмаи боэътимод насб кунед."
+  ],
+  "mistakes": [
+    "Навиштани `pip install` ҳамчун код: ин фармони терминал аст.",
+    "Номи китобхона нодуруст навишта шудааст."
+  ],
+  "exercise": {
+    "prompt": "Бо statistics.mean миёнаи [10, 20, 30] -ро бароред.",
+    "starter": "",
+    "solution": "import statistics\nprint(statistics.mean([10, 20, 30]))",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "20\n"
+      }
+    ],
+    "hint": "statistics.mean",
+    "mustContain": [
+      "statistics"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "pip чист?",
+      "options": [
+        "Насбкунандаи китобхонаҳо",
+        "Муҳаррири матн",
+        "Навъи маълумот"
+      ],
+      "answer": 0,
+      "explanation": "pip китобхонаҳоро аз PyPI насб мекунад."
+    },
+    {
+      "q": "PyPI чист?",
+      "options": [
+        "Анбори китобхонаҳои Python",
+        "Системаи оператсионӣ",
+        "Синфи махсус"
+      ],
+      "answer": 0,
+      "explanation": "Python Package Index."
+    },
+    {
+      "q": "Дар PythonТаҷ кадом китобхонаҳо дастрасанд?",
+      "options": [
+        "Танҳо стандартӣ",
+        "Ҳамаи PyPI",
+        "Ҳеҷ кадом"
+      ],
+      "answer": 0,
+      "explanation": "Танҳо китобхонаи стандартии Python."
+    }
+  ]
+}

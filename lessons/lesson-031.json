@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "id": "lesson-031",
+  "number": 31,
+  "module": "m5",
+  "title": "Lambda functions",
+  "description": "Функсияи кӯтоҳи беном.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Навиштани lambda",
+    "Истифода бо sorted ва map",
+    "Фаҳмидани вақти истифода"
+  ],
+  "explanation": [
+    "lambda — функсияи хурди як ифода: lambda x: x * 2. Бе def ва бе return; натиҷа худкор баргардонда мешавад.",
+    "Одатан бо sorted, map, filter истифода мешавад: sorted(a, key=lambda x: x[1]) — тартиб бо элементи дуюм.",
+    "Агар функсия мураккаб бошад, def-ро истифода баред — хонданаш осонтар аст."
+  ],
+  "examples": [
+    {
+      "title": "lambda",
+      "code": "double = lambda x: x * 2\nprint(double(6))\nadd = lambda a, b: a + b\nprint(add(2, 3))",
+      "stdin": "",
+      "steps": [
+        "lambda тағйирёбандаро мегирад ва ифодаро бармегардонад."
+      ],
+      "output": "12\n5\n"
+    },
+    {
+      "title": "sorted бо key",
+      "code": "words = [\"банан\", \"ол\", \"себ\", \"ананас\"]\nprint(sorted(words, key=lambda w: len(w)))\nnums = [1, 2, 3, 4]\nprint(list(map(lambda n: n * n, nums)))",
+      "stdin": "",
+      "steps": [
+        "key=len-и калима мураттаб мекунад.",
+        "map ба ҳар элемент функсия мекунад."
+      ],
+      "output": "['ол', 'себ', 'банан', 'ананас']\n[1, 4, 9, 16]\n"
+    }
+  ],
+  "notes": [
+    "lambda бояд аз як ифода иборат бошад.",
+    "Номи lambda-ро ба тағйирёбанда додан мумкин аст, вале def беҳтар аст."
+  ],
+  "mistakes": [
+    "Навиштани `return` дар lambda.",
+    "Ҷамъ кардани якчанд амал дар як lambda."
+  ],
+  "exercise": {
+    "prompt": "Бо lambda тағйирёбандаи triple созед, ки ададро 3 маротиба мекунад. triple(4)-ро бароред.",
+    "starter": "",
+    "solution": "triple = lambda n: n * 3\nprint(triple(4))",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "12\n"
+      }
+    ],
+    "hint": "triple = lambda n: ...",
+    "mustContain": [
+      "lambda"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "lambda чист?",
+      "options": [
+        "Функсияи хурди беном",
+        "Навъи хато",
+        "Давр"
+      ],
+      "answer": 0,
+      "explanation": "lambda функсияи кӯтоҳ аст."
+    },
+    {
+      "q": "(lambda x: x + 1)(5) чист?",
+      "options": [
+        "5",
+        "6",
+        "Хато"
+      ],
+      "answer": 1,
+      "explanation": "x = 5 ба 6 табдил мешавад."
+    },
+    {
+      "q": "lambda return дорад?",
+      "options": [
+        "Бале, ҳатмист",
+        "Не, худкор аст",
+        "Танҳо дар охир"
+      ],
+      "answer": 1,
+      "explanation": "Натиҷаи ифода худкор баргардонда мешавад."
+    }
+  ]
+}

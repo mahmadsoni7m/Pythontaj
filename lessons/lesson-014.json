@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "id": "lesson-014",
+  "number": 14,
+  "module": "m2",
+  "title": "Табдил додани навъи маълумот",
+  "description": "int(), float(), str() ва bool().",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Табдил додани матн ба адад",
+    "Табдил додани адад ба матн",
+    "Дарки ValueError"
+  ],
+  "explanation": [
+    "Гоҳо навъи қиматро иваз кардан лозим аст. int(\"5\") матнро ба адади бутун, float(\"2.5\") ба адади касрӣ, str(10) адад ба матн табдил медиҳад.",
+    "Ин махсусан бо input() муҳим аст, зеро input() ҳамеша матн медиҳад: age = int(input()).",
+    "Агар матн ба адад табдил наёбад, ValueError рух медиҳад: int(\"абв\") хато аст."
+  ],
+  "examples": [
+    {
+      "title": "Табдилҳо",
+      "code": "print(int(\"5\") + 3)\nprint(float(\"2.5\") * 2)\nprint(str(10) + \"%\")\nprint(int(3.9))\nprint(bool(0), bool(\"a\"))",
+      "stdin": "",
+      "steps": [
+        "int(3.9) қисми бутунро мегирад (3).",
+        "bool(0) False, bool(\"a\") True аст."
+      ],
+      "output": "8\n5.0\n10%\n3\nFalse True\n"
+    },
+    {
+      "title": "Бо input()",
+      "code": "a = int(input())\nb = int(input())\nprint(a + b)",
+      "stdin": "4\n7",
+      "steps": [
+        "input() матн медиҳад.",
+        "int() онро ба адад табдил медиҳад.",
+        "Ҳоло ҷамъи ададҳо ҳисоб мешавад."
+      ],
+      "output": "4\n7\n11\n"
+    }
+  ],
+  "notes": [
+    "int() касрро набераст: int(\"2.5\") хато медиҳад; аввал float() кунед.",
+    "int(3.9) нуқтаро бурида мегирад, давр намекунад."
+  ],
+  "mistakes": [
+    "Фаромӯш кардани int() пас аз input(): \"4\" + \"7\" = \"47\".",
+    "Кӯшиши int(\"салом\")."
+  ],
+  "exercise": {
+    "prompt": "Ду ададро бо input() хонед ва ҷамъи онҳоро бароред. Намуна: 3 ва 5 → 8",
+    "starter": "a = input()\nb = input()\n",
+    "solution": "a = int(input())\nb = int(input())\nprint(a + b)",
+    "tests": [
+      {
+        "stdin": "3\n5",
+        "expected": "3\n5\n8\n"
+      },
+      {
+        "stdin": "10\n-4",
+        "expected": "10\n-4\n6\n"
+      }
+    ],
+    "hint": "Ҳар input()-ро ба int() печонед.",
+    "mustContain": [
+      "int"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "int(\"12\") + 1 чист?",
+      "options": [
+        "13",
+        "121",
+        "Хато"
+      ],
+      "answer": 0,
+      "explanation": "int матнро ба адад мегардонад: 12 + 1."
+    },
+    {
+      "q": "str(5) + \"1\" чист?",
+      "options": [
+        "6",
+        "51",
+        "Хато"
+      ],
+      "answer": 1,
+      "explanation": "Ҳарду матн ҳастанд, пайваст мешаванд."
+    },
+    {
+      "q": "Кадом хато ҳангоми int(\"abc\") мебарояд?",
+      "options": [
+        "TypeError",
+        "ValueError",
+        "NameError"
+      ],
+      "answer": 1,
+      "explanation": "Қимат дуруст нест, пас ValueError."
+    }
+  ]
+}

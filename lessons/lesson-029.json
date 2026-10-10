@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "id": "lesson-029",
+  "number": 29,
+  "module": "m5",
+  "title": "return",
+  "description": "Баргардонидани натиҷа аз функсия.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Фарқи print ва return",
+    "Истифодаи натиҷа",
+    "Якчанд return"
+  ],
+  "explanation": [
+    "return натиҷаро ба ҷое, ки функсия даъват шуд, бармегардонад ва функсияро қатъ мекунад. Ин аз print фарқ дорад: print танҳо нишон медиҳад, return қимат медиҳад, ки онро дар тағйирёбанда нигоҳ доштан мумкин аст.",
+    "Агар return набошад, функсия None бармегардонад.",
+    "Якчанд return метавонанд дар шохаҳои гуногун бошанд: аввалинаш, ки иҷро шавад, функсияро мебандад."
+  ],
+  "examples": [
+    {
+      "title": "return",
+      "code": "def add(a, b):\n    return a + b\n\nresult = add(2, 3)\nprint(result)\nprint(add(10, 5) * 2)",
+      "stdin": "",
+      "steps": [
+        "add(2, 3) ба 5 табдил мешавад.",
+        "Натиҷаро дар ифода истифода бурдан мумкин аст."
+      ],
+      "output": "5\n30\n"
+    },
+    {
+      "title": "Якчанд return",
+      "code": "def sign(n):\n    if n > 0:\n        return \"мусбат\"\n    if n < 0:\n        return \"манфӣ\"\n    return \"сифр\"\n\nprint(sign(5), sign(-1), sign(0))",
+      "stdin": "",
+      "steps": [
+        "Функсия бо аввалин return қатъ мешавад."
+      ],
+      "output": "мусбат манфӣ сифр\n"
+    }
+  ],
+  "notes": [
+    "Пас аз return дар ҳамон шоха код иҷро намешавад.",
+    "Якчанд қимат бо вергул баргардонда мешавад (кортеж)."
+  ],
+  "mistakes": [
+    "Истифодаи print ба ҷои return ва кӯшиши истифодаи натиҷа: x = f() баъд x = None.",
+    "Навиштани код пас аз return."
+  ],
+  "exercise": {
+    "prompt": "Функсияи double(n) созед, ки 2*n-ро бармегардонад. Адади воридшударо бо input хонед ва double(n)-ро бароред.",
+    "starter": "n = int(input())\n",
+    "solution": "def double(n):\n    return n * 2\n\nprint(double(int(input())))",
+    "tests": [
+      {
+        "stdin": "4",
+        "expected": "4\n8\n"
+      },
+      {
+        "stdin": "10",
+        "expected": "10\n20\n"
+      }
+    ],
+    "hint": "return n * 2",
+    "mustContain": [
+      "return"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "return чӣ мекунад?",
+      "options": [
+        "Қимат бармегардонад",
+        "Матн мебарорад",
+        "Давр мекунад"
+      ],
+      "answer": 0,
+      "explanation": "return қиматро ба даъваткунанда медиҳад."
+    },
+    {
+      "q": "Функсия бе return чӣ мегардонад?",
+      "options": [
+        "0",
+        "None",
+        "Хато"
+      ],
+      "answer": 1,
+      "explanation": "Пешфарз None аст."
+    },
+    {
+      "q": "def f(): return 1; return 2 — f() чист?",
+      "options": [
+        "1",
+        "2",
+        "12"
+      ],
+      "answer": 0,
+      "explanation": "Аввалин return функсияро қатъ мекунад."
+    }
+  ]
+}

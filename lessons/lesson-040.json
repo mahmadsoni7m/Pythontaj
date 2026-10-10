@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "lesson-040",
+  "number": 40,
+  "module": "m7",
+  "title": "Инкапсулятсия ва полиморфизм",
+  "description": "Пинҳон кардани маълумот ва як интерфейс.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Фаҳмидани инкапсулятсия",
+    "Фаҳмидани полиморфизм",
+    "Истифодаи property"
+  ],
+  "explanation": [
+    "Инкапсулятсия — пинҳон кардани тафсилоти дохилӣ. Дар Python одатан атрибутҳои ботинӣ бо зерхат оғоз мешаванд: self._balance. Ин созишномаест, ки мегӯяд «берун аз синф ба ин даст нарасонед».",
+    "Полиморфизм — объектҳои гуногун як метод бо як ном доранд, вале ҳар кадом онро худаш иҷро мекунад. Масалан, Dog ва Cat ҳарду speak() доранд.",
+    "@property имкон медиҳад, ки метод ҳамчун атрибут хонда шавад ва санҷишҳо илова шаванд."
+  ],
+  "examples": [
+    {
+      "title": "Инкапсулятсия",
+      "code": "class Account:\n    def __init__(self):\n        self._balance = 0\n    def deposit(self, n):\n        if n > 0:\n            self._balance += n\n    @property\n    def balance(self):\n        return self._balance\n\na = Account()\na.deposit(50)\na.deposit(-5)\nprint(a.balance)",
+      "stdin": "",
+      "steps": [
+        "Қимати манфӣ рад мешавад.",
+        "balance ҳамчун атрибут хонда мешавад."
+      ],
+      "output": "50\n"
+    },
+    {
+      "title": "Полиморфизм",
+      "code": "class Dog:\n    def speak(self):\n        return \"Гав\"\nclass Cat:\n    def speak(self):\n        return \"Мяу\"\n\nfor a in [Dog(), Cat()]:\n    print(a.speak())",
+      "stdin": "",
+      "steps": [
+        "Як номи метод, натиҷаҳои гуногун.",
+        "Давр ҳар объектро якхела коркард мекунад."
+      ],
+      "output": "Гав\nМяу\n"
+    }
+  ],
+  "notes": [
+    "Зерхат — созишнома аст, на манъи ҳақиқӣ.",
+    "Полиморфизм кодро умумӣ мекунад."
+  ],
+  "mistakes": [
+    "Тағйир додани атрибути _x берун аз синф.",
+    "Номи гуногун барои як амал ба объектҳои гуногун."
+  ],
+  "exercise": {
+    "prompt": "Дар синфи Counter атрибути _n созед ва метод inc() (n+1) ва property value. Ду маротиба inc() кунед ва value-ро бароред.",
+    "starter": "",
+    "solution": "class Counter:\n    def __init__(self):\n        self._n = 0\n    def inc(self):\n        self._n += 1\n    @property\n    def value(self):\n        return self._n\n\nc = Counter()\nc.inc()\nc.inc()\nprint(c.value)",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "2\n"
+      }
+    ],
+    "hint": "@property ва return self._n",
+    "mustContain": [
+      "property"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "Инкапсулятсия чист?",
+      "options": [
+        "Пинҳон кардани тафсилоти дохилӣ",
+        "Меросбарӣ",
+        "Тағйир додани хатоҳо"
+      ],
+      "answer": 0,
+      "explanation": "Тафсилот пинҳон мемонад."
+    },
+    {
+      "q": "Полиморфизм чист?",
+      "options": [
+        "Як метод барои объектҳои гуногун",
+        "Якчанд синф дар як файл",
+        "Номи тағйирёбанда"
+      ],
+      "answer": 0,
+      "explanation": "Объектҳо як ном, вале рафтори гуногун доранд."
+    },
+    {
+      "q": "@property барои чӣ?",
+      "options": [
+        "Метод ҳамчун атрибут мехонем",
+        "Файлро мехонем",
+        "Давр месозем"
+      ],
+      "answer": 0,
+      "explanation": "Метод ба атрибут монанд мешавад."
+    }
+  ]
+}

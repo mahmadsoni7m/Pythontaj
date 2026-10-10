@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "id": "lesson-012",
+  "number": 12,
+  "module": "m2",
+  "title": "Кор бо матнҳо",
+  "description": "Сатрҳо ва методҳои асосии онҳо.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Пайваст кардани матнҳо",
+    "Истифодаи len(), upper(), lower()",
+    "Дарёфт кардани рамз бо индекс"
+  ],
+  "explanation": [
+    "Матн (str) — пайдарпайии рамзҳо. Матнҳоро бо + пайваст мекунанд, бо * такрор мекунанд. len() дарозии матнро медиҳад.",
+    "Матн методҳо дорад: upper() ҳарфҳои калон, lower() ҳарфҳои хурд, strip() фосилаҳои атрофро мебардорад, replace() қисми матнро иваз мекунад.",
+    "Рамзҳо бо индекс гирифта мешаванд: s[0] — рамзи аввал, s[-1] — охирин."
+  ],
+  "examples": [
+    {
+      "title": "Амалҳо",
+      "code": "s = \"Python\"\nprint(len(s))\nprint(s + \"!\")\nprint(s * 2)\nprint(s[0], s[-1])",
+      "stdin": "",
+      "steps": [
+        "len дарозиро медиҳад.",
+        "Индекс аз 0 оғоз мешавад.",
+        "-1 — рамзи охирин."
+      ],
+      "output": "6\nPython!\nPythonPython\nP n\n"
+    },
+    {
+      "title": "Методҳо",
+      "code": "t = \"  Салом Ҷаҳон  \"\nprint(t.strip())\nprint(t.upper())\nprint(t.replace(\"Ҷаҳон\", \"Python\"))",
+      "stdin": "",
+      "steps": [
+        "strip фосилаҳоро мебардорад.",
+        "Методҳо матни нав бармегардонанд, асл тағйир намеёбад."
+      ],
+      "output": "Салом Ҷаҳон\n  САЛОМ ҶАҲОН  \n  Салом Python  \n"
+    }
+  ],
+  "notes": [
+    "Матнҳо тағйирнопазиранд: s[0] = \"p\" ғалат аст.",
+    "Методҳоро бо нуқта даъват мекунанд: s.upper()."
+  ],
+  "mistakes": [
+    "Фаромӯш кардани қавс: `s.upper` бе `()`.",
+    "Умедвор будан, ки upper() худи s-ро тағйир медиҳад."
+  ],
+  "exercise": {
+    "prompt": "Матни Python Tajik -ро ба ҳарфҳои калон табдил диҳед ва бароред.",
+    "starter": "text = \"Python Tajik\"\n",
+    "solution": "text = \"Python Tajik\"\nprint(text.upper())",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "PYTHON TAJIK\n"
+      }
+    ],
+    "hint": "text.upper()",
+    "mustContain": [
+      "upper"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "len(\"abc\") чанд аст?",
+      "options": [
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "Дар \"abc\" се рамз ҳаст."
+    },
+    {
+      "q": "\"abc\"[0] чист?",
+      "options": [
+        "a",
+        "b",
+        "c"
+      ],
+      "answer": 0,
+      "explanation": "Индекс аз сифр оғоз мешавад."
+    },
+    {
+      "q": "\"ab\" * 2 чист?",
+      "options": [
+        "abab",
+        "ab2",
+        "aabb"
+      ],
+      "answer": 0,
+      "explanation": "* матнро такрор мекунад."
+    }
+  ]
+}

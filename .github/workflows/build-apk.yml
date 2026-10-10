@@ -1,0 +1,119 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to attach the APK to a GitHub Release
+
+concurrency:
+  group: build-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Validate lessons and manifest
+        run: |
+          python scripts/build_manifest.py
+          python scripts/validate_content.py
+      - name: Run tests (JS + Python)
+        run: |
+          node --test tests/*.test.js
+          python -m unittest discover -s tests -p 'test_*.py'
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEYSTORE: ${{ secrets.KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+
+      - uses: actions/setup-python@v5   # Python for the Chaquopy build step
+        with: { python-version: '3.11' }
+
+      - name: Compute version
+        id: ver
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "name=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=1.0.0" >> "$GITHUB_OUTPUT"
+          fi
+          echo "code=${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+
+      - name: Refresh lesson manifest
+        run: python scripts/build_manifest.py && python scripts/validate_content.py
+
+      - name: Copy web app into Android assets
+        run: |
+          python scripts/sync_assets.py \
+            --dest android/app/src/main/assets/www \
+            --remote-base "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" \
+            --repo "${{ github.repository }}" \
+            --version "${{ steps.ver.outputs.name }}"
+
+      - name: Restore signing key (optional)
+        if: env.HAS_KEYSTORE == 'true'
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/pythontaj.jks"
+          echo "KEYSTORE_PATH=$RUNNER_TEMP/pythontaj.jks" >> "$GITHUB_ENV"
+          echo "KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> "$GITHUB_ENV"
+          echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> "$GITHUB_ENV"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '8.9' }
+
+      - name: Build signed release APK
+        if: env.HAS_KEYSTORE == 'true'
+        working-directory: android
+        env:
+          VERSION_NAME: ${{ steps.ver.outputs.name }}
+          VERSION_CODE: ${{ steps.ver.outputs.code }}
+        run: gradle assembleRelease --no-daemon --stacktrace
+
+      - name: Build debug APK (no signing key configured)
+        if: env.HAS_KEYSTORE != 'true'
+        working-directory: android
+        env:
+          VERSION_NAME: ${{ steps.ver.outputs.name }}
+          VERSION_CODE: ${{ steps.ver.outputs.code }}
+        run: |
+          echo "::warning::KEYSTORE_BASE64 secret is missing: building a DEBUG-signed APK. Updating an installed app with a later build will fail unless the same key is used. See GITHUB_SETUP.md."
+          gradle assembleDebug --no-daemon --stacktrace
+
+      - name: Collect APK + checksum
+        run: |
+          mkdir -p dist
+          APK=$(find android/app/build/outputs/apk -name '*.apk' | head -n 1)
+          cp "$APK" dist/PythonTaj.apk
+          (cd dist && sha256sum PythonTaj.apk > PythonTaj.apk.sha256 && cat PythonTaj.apk.sha256)
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PythonTaj-apk
+          path: dist/*
+          retention-days: 30
+
+      - name: Publish GitHub Release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/PythonTaj.apk
+            dist/PythonTaj.apk.sha256
+          generate_release_notes: true

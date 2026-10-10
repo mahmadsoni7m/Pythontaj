@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "lesson-020",
+  "number": 20,
+  "module": "m3",
+  "title": "break ва continue",
+  "description": "Идоракунии давраҳо.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Истифодаи break",
+    "Истифодаи continue",
+    "Фарқи байни онҳо"
+  ],
+  "explanation": [
+    "break давраро фавран қатъ мекунад. continue такрори ҷорӣро бас мекунад ва ба такрори навбатӣ мегузарад.",
+    "break барои он аст, ки чизеро ёфтаед ва идомаи ҷустуҷӯ лозим нест. continue барои гузаштан аз баъзе қиматҳо.",
+    "Ҳарду ҳам for ва ҳам while кор мекунанд."
+  ],
+  "examples": [
+    {
+      "title": "break",
+      "code": "for n in range(1, 10):\n    if n == 4:\n        break\n    print(n)\nprint(\"Қатъ шуд\")",
+      "stdin": "",
+      "steps": [
+        "Вақте n = 4 мешавад, давр қатъ мешавад.",
+        "Танҳо 1, 2, 3 чоп мешавад."
+      ],
+      "output": "1\n2\n3\nҚатъ шуд\n"
+    },
+    {
+      "title": "continue",
+      "code": "for n in range(1, 6):\n    if n % 2 == 0:\n        continue\n    print(n)",
+      "stdin": "",
+      "steps": [
+        "Ададҳои ҷуфт гузашта мешаванд.",
+        "Танҳо тоқҳо чоп мешаванд."
+      ],
+      "output": "1\n3\n5\n"
+    }
+  ],
+  "notes": [
+    "break танҳо давраи ҳозираро мешиканад.",
+    "Пас аз break ё continue дар ҳамон блок код иҷро намешавад."
+  ],
+  "mistakes": [
+    "Истифодаи break берун аз давр — SyntaxError.",
+    "Фаромӯш кардани тағйир додани ҳисобкунак дар while пеш аз continue."
+  ],
+  "exercise": {
+    "prompt": "Аз 1 то 10 гузашта, ададҳои 5-ро нагузашта (continue) бароред; дар ҳар сатр як адад.",
+    "starter": "",
+    "solution": "for i in range(1, 11):\n    if i == 5:\n        continue\n    print(i)",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "1\n2\n3\n4\n6\n7\n8\n9\n10\n"
+      }
+    ],
+    "hint": "if i == 5: continue",
+    "mustContain": [
+      "continue"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "break чӣ мекунад?",
+      "options": [
+        "Давраро қатъ мекунад",
+        "Як такрорро мегузаронад",
+        "Барномаро хомӯш мекунад"
+      ],
+      "answer": 0,
+      "explanation": "break давраро комилан мешиканад."
+    },
+    {
+      "q": "continue чӣ мекунад?",
+      "options": [
+        "Давраро мешиканад",
+        "Ба такрори навбатӣ мегузарад",
+        "Барномаро аз нав мегирад"
+      ],
+      "answer": 1,
+      "explanation": "continue такрори ҷориро бас мекунад."
+    },
+    {
+      "q": "Дар for i in range(5): if i == 2: break — чанд адад чоп мешавад?",
+      "options": [
+        "2",
+        "3",
+        "5"
+      ],
+      "answer": 0,
+      "explanation": "Ададҳои 0 ва 1 чоп мешаванд, дар 2 давр қатъ мешавад."
+    }
+  ]
+}

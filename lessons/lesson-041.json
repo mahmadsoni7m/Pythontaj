@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "id": "lesson-041",
+  "number": 41,
+  "module": "m8",
+  "title": "Iterators ва generators",
+  "description": "Генераторҳо қиматҳоро ба навбат медиҳанд.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Фаҳмидани iterator",
+    "Навиштани generator бо yield",
+    "Фаҳмидани сарфаи хотира"
+  ],
+  "explanation": [
+    "Iterator — объектест, ки қиматҳоро ба навбат медиҳад. for дар паси парда iter() ва next()-ро истифода мебарад. next(it) қимати навбатиро мегирад.",
+    "Generator — функсия бо yield: он қимат медиҳад ва бо ҳамон ҳолат дар ҳамон ҷо истода меистад. Ин имкон медиҳад, ки пайдарпайии калон бе нигоҳ доштани ҳамааш дар хотира сохта шавад.",
+    "Генератор comprehension низ мешавад: (x*x for x in range(5))."
+  ],
+  "examples": [
+    {
+      "title": "iter ва next",
+      "code": "it = iter([10, 20, 30])\nprint(next(it))\nprint(next(it))\nprint(next(it))\ntry:\n    next(it)\nexcept StopIteration:\n    print(\"Тамом\")",
+      "stdin": "",
+      "steps": [
+        "next қимати навбатиро мегирад.",
+        "Пас аз охир StopIteration мебарояд."
+      ],
+      "output": "10\n20\n30\nТамом\n"
+    },
+    {
+      "title": "Generator",
+      "code": "def countdown(n):\n    while n > 0:\n        yield n\n        n -= 1\n\nfor x in countdown(3):\n    print(x)\ngen = (i * i for i in range(4))\nprint(sum(gen))",
+      "stdin": "",
+      "steps": [
+        "yield қимат медиҳад ва ҳолатро нигоҳ медорад.",
+        "sum аз ифодаи генератор ҷамъро мегирад."
+      ],
+      "output": "3\n2\n1\n14\n"
+    }
+  ],
+  "notes": [
+    "Generator якбора фақат як қимат дорад.",
+    "Генераторро як маротиба гузаштан мумкин аст."
+  ],
+  "mistakes": [
+    "Кӯшиши аз нав гузаштани генератори сарфшуда.",
+    "Навиштани return ба ҷои yield."
+  ],
+  "exercise": {
+    "prompt": "Генератори evens(n) нависед, ки ададҳои ҷуфти аз 0 то n-ро бо yield медиҳад. n = 6 → 0 2 4 6 (дар як сатр бо фосила).",
+    "starter": "n = int(input())\n",
+    "solution": "def evens(n):\n    for i in range(0, n + 1, 2):\n        yield i\n\nn = int(input())\nprint(*evens(n))",
+    "tests": [
+      {
+        "stdin": "6",
+        "expected": "6\n0 2 4 6\n"
+      },
+      {
+        "stdin": "10",
+        "expected": "10\n0 2 4 6 8 10\n"
+      }
+    ],
+    "hint": "yield i ва print(*evens(n))",
+    "mustContain": [
+      "yield"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "yield чӣ мекунад?",
+      "options": [
+        "Қимат медиҳад ва истода меистад",
+        "Барномаро қатъ мекунад",
+        "Файл мекушояд"
+      ],
+      "answer": 0,
+      "explanation": "Генератор бо yield пайдарпай қимат медиҳад."
+    },
+    {
+      "q": "next(it) дар охир чӣ медиҳад?",
+      "options": [
+        "StopIteration",
+        "None",
+        "0"
+      ],
+      "answer": 0,
+      "explanation": "Хатои махсус: пайдарпайӣ тамом шуд."
+    },
+    {
+      "q": "Генератор барои чӣ хуб аст?",
+      "options": [
+        "Хотираро сарфа мекунад",
+        "Хатоҳоро нест мекунад",
+        "Суръатро қатъ мекунад"
+      ],
+      "answer": 0,
+      "explanation": "Қиматҳо ба навбат сохта мешаванд."
+    }
+  ]
+}

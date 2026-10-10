@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "id": "lesson-033",
+  "number": 33,
+  "module": "m6",
+  "title": "Истисноҳо: try ва except",
+  "description": "Идоракунии хатоҳо ҳангоми иҷро.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Дастгир кардани хато",
+    "Истифодаи else ва finally",
+    "Дастгир кардани хатои мушаххас"
+  ],
+  "explanation": [
+    "Хатое, ки ҳангоми иҷро рух медиҳад, истисно (exception) номида мешавад. Агар онро дастгир накунем, барнома қатъ мешавад. try ... except хатоҳоро дастгир мекунад.",
+    "except-ро бо навъи мушаххас менависанд: except ValueError:. else — вақте иҷро мешавад, ки хато набуд. finally — ҳамеша иҷро мешавад.",
+    "Ин махсусан бо воридкунии корбар муфид аст: агар кас матнро ба ҷои адад нависад, барнома намефурӯшад."
+  ],
+  "examples": [
+    {
+      "title": "try / except",
+      "code": "try:\n    n = int(\"абв\")\nexcept ValueError:\n    print(\"Адад нодуруст аст\")\nprint(\"Барнома идома дорад\")",
+      "stdin": "",
+      "steps": [
+        "int(\"абв\") ValueError медиҳад.",
+        "except онро дастгир мекунад ва барнома идома меёбад."
+      ],
+      "output": "Адад нодуруст аст\nБарнома идома дорад\n"
+    },
+    {
+      "title": "else ва finally",
+      "code": "try:\n    x = 10 / 2\nexcept ZeroDivisionError:\n    print(\"Тақсим ба сифр\")\nelse:\n    print(\"Натиҷа:\", x)\nfinally:\n    print(\"Тамом\")",
+      "stdin": "",
+      "steps": [
+        "else — вақте хато набуд.",
+        "finally ҳамеша иҷро мешавад."
+      ],
+      "output": "Натиҷа: 5.0\nТамом\n"
+    }
+  ],
+  "notes": [
+    "Навъи хатоҳои маъмул: ValueError, TypeError, ZeroDivisionError, KeyError, IndexError, FileNotFoundError.",
+    "except бе навъ ҳама хатоҳоро мегирад, вале ин усул тавсия намешавад."
+  ],
+  "mistakes": [
+    "except-и васеъ, ки хатоҳои воқеиро пинҳон мекунад.",
+    "Дар try чизҳои зиёдро гузоштан."
+  ],
+  "exercise": {
+    "prompt": "Адади воридшударо хонед. Агар int() кор накунад, Хато бароред; вагарна натиҷаро 2 маротиба бароред.",
+    "starter": "text = input()\n",
+    "solution": "text = input()\ntry:\n    n = int(text)\n    print(n * 2)\nexcept ValueError:\n    print(\"Хато\")",
+    "tests": [
+      {
+        "stdin": "7",
+        "expected": "7\n14\n"
+      },
+      {
+        "stdin": "абв",
+        "expected": "абв\nХато\n"
+      }
+    ],
+    "hint": "try ... except ValueError:",
+    "mustContain": [
+      "try",
+      "except"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "try/except барои чӣ лозим аст?",
+      "options": [
+        "Дастгир кардани хато",
+        "Давр сохтан",
+        "Тағйирёбанда сохтан"
+      ],
+      "answer": 0,
+      "explanation": "Барнома ҳангоми хато қатъ намешавад."
+    },
+    {
+      "q": "finally кай иҷро мешавад?",
+      "options": [
+        "Фақат ҳангоми хато",
+        "Ҳамеша",
+        "Ҳеҷ гоҳ"
+      ],
+      "answer": 1,
+      "explanation": "finally ҳатман иҷро мешавад."
+    },
+    {
+      "q": "int(\"x\") кадом хато медиҳад?",
+      "options": [
+        "ValueError",
+        "NameError",
+        "KeyError"
+      ],
+      "answer": 0,
+      "explanation": "Қимати нодуруст — ValueError."
+    }
+  ]
+}

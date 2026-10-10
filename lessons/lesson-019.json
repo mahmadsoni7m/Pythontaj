@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "lesson-019",
+  "number": 19,
+  "module": "m3",
+  "title": "range()",
+  "description": "Пайдарпайии ададҳо барои for.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Истифодаи range(n)",
+    "range(start, stop, step)",
+    "Ҷамъ кардани ададҳо бо for ва range"
+  ],
+  "explanation": [
+    "range(n) ададҳоро аз 0 то n-1 медиҳад. range(a, b) — аз a то b-1. range(a, b, step) — бо қадами step.",
+    "Адади охирин дохил намешавад: range(1, 4) → 1, 2, 3.",
+    "range бо for барои такрор кардани амал ба шумораи муайян истифода мешавад."
+  ],
+  "examples": [
+    {
+      "title": "Шаклҳои range",
+      "code": "for i in range(3):\n    print(i)\nprint(list(range(1, 6)))\nprint(list(range(0, 10, 3)))",
+      "stdin": "",
+      "steps": [
+        "range(3) ададҳои 0, 1, 2-ро медиҳад.",
+        "list() пайдарпайиро ба рӯйхат табдил медиҳад."
+      ],
+      "output": "0\n1\n2\n[1, 2, 3, 4, 5]\n[0, 3, 6, 9]\n"
+    },
+    {
+      "title": "Ҷамъ",
+      "code": "total = 0\nfor n in range(1, 101):\n    total += n\nprint(total)",
+      "stdin": "",
+      "steps": [
+        "Ададҳо аз 1 то 100.",
+        "Ҷамъи онҳо 5050 аст."
+      ],
+      "output": "5050\n"
+    }
+  ],
+  "notes": [
+    "range хотираро сарфа мекунад ва ададҳоро якбора намесозад.",
+    "Қадам метавонад манфӣ бошад: range(5, 0, -1)."
+  ],
+  "mistakes": [
+    "Умедвор будан, ки range(5) ба 5 мерасад: 5 дохил нест.",
+    "Фаромӯш кардани list() ҳангоми чоп кардани range."
+  ],
+  "exercise": {
+    "prompt": "Бо range ададҳои 1 то 5-ро дар як сатр бо фосила бароред: 1 2 3 4 5",
+    "starter": "",
+    "solution": "for i in range(1, 6):\n    print(i, end=\" \")\nprint()",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "1 2 3 4 5 \n"
+      }
+    ],
+    "hint": "print(i, end=\" \")",
+    "mustContain": [
+      "range"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "range(3) чӣ медиҳад?",
+      "options": [
+        "1, 2, 3",
+        "0, 1, 2",
+        "0, 1, 2, 3"
+      ],
+      "answer": 1,
+      "explanation": "range(3) аз 0 то 2."
+    },
+    {
+      "q": "range(2, 5) чӣ медиҳад?",
+      "options": [
+        "2, 3, 4",
+        "2, 3, 4, 5",
+        "3, 4, 5"
+      ],
+      "answer": 0,
+      "explanation": "Охирин адад дохил намешавад."
+    },
+    {
+      "q": "range(0, 10, 5) чӣ медиҳад?",
+      "options": [
+        "0, 5",
+        "0, 5, 10",
+        "5, 10"
+      ],
+      "answer": 0,
+      "explanation": "Қадами 5: 0 ва 5."
+    }
+  ]
+}

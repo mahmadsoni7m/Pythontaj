@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "lesson-022",
+  "number": 22,
+  "module": "m4",
+  "title": "Методҳои list",
+  "description": "append, remove, sort ва ғайра.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Илова ва нест кардани элемент",
+    "Мураттаб кардан",
+    "Истифодаи len, sum, min, max"
+  ],
+  "explanation": [
+    "append(x) ба охир мефизояд, insert(i, x) ба ҷои муайян мегузорад, remove(x) аввалин x-ро нест мекунад, pop() охиринро гирифта нест мекунад.",
+    "sort() рӯйхатро мураттаб мекунад, reverse() баракс мекунад. sorted(a) нусхаи нав медиҳад.",
+    "Ҳамчунин: len(a), sum(a), min(a), max(a)."
+  ],
+  "examples": [
+    {
+      "title": "Илова ва нест",
+      "code": "a = [3, 1]\na.append(2)\na.insert(0, 9)\nprint(a)\na.remove(1)\nprint(a)\nprint(a.pop())\nprint(a)",
+      "stdin": "",
+      "steps": [
+        "append ба охир, insert ба ибтидо.",
+        "pop охиринро мегирад ва нест мекунад."
+      ],
+      "output": "[9, 3, 1, 2]\n[9, 3, 2]\n2\n[9, 3]\n"
+    },
+    {
+      "title": "Мураттабкунӣ",
+      "code": "b = [5, 2, 8, 1]\nb.sort()\nprint(b)\nb.reverse()\nprint(b)\nprint(sum(b), min(b), max(b))",
+      "stdin": "",
+      "steps": [
+        "sort() рӯйхатро тағйир медиҳад.",
+        "sum, min, max ҳисобҳои тайёр доранд."
+      ],
+      "output": "[1, 2, 5, 8]\n[8, 5, 2, 1]\n16 1 8\n"
+    }
+  ],
+  "notes": [
+    "sort() None бармегардонад: `a = a.sort()` хато аст.",
+    "remove танҳо аввалин мувофиқро нест мекунад."
+  ],
+  "mistakes": [
+    "Навиштани `a = a.append(1)`: a ба None табдил мешавад.",
+    "remove барои қимате, ки нест: ValueError."
+  ],
+  "exercise": {
+    "prompt": "Рӯйхати [3, 1, 2] -ро мураттаб кунед ва бароред.",
+    "starter": "a = [3, 1, 2]\n",
+    "solution": "a = [3, 1, 2]\na.sort()\nprint(a)",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "[1, 2, 3]\n"
+      }
+    ],
+    "hint": "a.sort() ва print(a).",
+    "mustContain": [
+      "sort"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "append чӣ мекунад?",
+      "options": [
+        "Ба охир меафзояд",
+        "Аз охир мебарад",
+        "Мураттаб мекунад"
+      ],
+      "answer": 0,
+      "explanation": "append элементро ба охири рӯйхат мегузорад."
+    },
+    {
+      "q": "max([2, 9, 4]) чист?",
+      "options": [
+        "2",
+        "9",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "Калонтарин қимат 9 аст."
+    },
+    {
+      "q": "pop() чӣ мекунад?",
+      "options": [
+        "Охиринро мегирад ва нест мекунад",
+        "Аввалинро нест мекунад",
+        "Рӯйхатро тоза мекунад"
+      ],
+      "answer": 0,
+      "explanation": "pop() охирин элементро бармегардонад."
+    }
+  ]
+}

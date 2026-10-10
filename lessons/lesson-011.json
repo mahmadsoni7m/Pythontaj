@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "lesson-011",
+  "number": 11,
+  "module": "m2",
+  "title": "Операторҳои мантиқӣ",
+  "description": "and, or, not барои омехта кардани шартҳо.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Истифодаи and, or, not",
+    "Фаҳмидани ҷадвали ростӣ",
+    "Омехта кардани муқоисаҳо"
+  ],
+  "explanation": [
+    "and — True аст, агар ҳарду шарт True бошанд. or — True аст, агар камаш яке True бошад. not — қиматро баракс мекунад.",
+    "Ин операторҳо барои шартҳои мураккаб лозиманд, масалан: синну сол аз 18 зиёд ва иҷозат ҳаст.",
+    "Тартиб: аввал not, баъд and, баъд or. Бо қавс возеҳ кунед."
+  ],
+  "examples": [
+    {
+      "title": "and/or/not",
+      "code": "print(True and False)\nprint(True or False)\nprint(not True)",
+      "stdin": "",
+      "steps": [
+        "and танҳо ҳангоми ду True медиҳад.",
+        "or барои як True кифоя аст."
+      ],
+      "output": "False\nTrue\nFalse\n"
+    },
+    {
+      "title": "Бо муқоиса",
+      "code": "age = 20\nhas_id = True\nprint(age >= 18 and has_id)\nprint(age < 18 or not has_id)",
+      "stdin": "",
+      "steps": [
+        "Ҳар муқоиса аввал ҳисоб мешавад.",
+        "Баъд оператор мантиқӣ истифода мешавад."
+      ],
+      "output": "True\nFalse\n"
+    }
+  ],
+  "notes": [
+    "Python бо and/or ҳисоби кӯтоҳ мекунад: агар натиҷа аллакай маълум бошад, идомаро намебинад.",
+    "Қиматҳои холӣ (0, \"\") ҳамчун False ҳисоб мешаванд."
+  ],
+  "mistakes": [
+    "Навиштани `&&` ва `||` аз забонҳои дигар — дар Python and ва or.",
+    "Надоштани қавс дар шартҳои мураккаб."
+  ],
+  "exercise": {
+    "prompt": "age = 25, has_ticket = True. Бароред: оё шахс ворид шуда метавонад (age >= 18 and has_ticket).",
+    "starter": "age = 25\nhas_ticket = True\n",
+    "solution": "age = 25\nhas_ticket = True\nprint(age >= 18 and has_ticket)",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "True\n"
+      }
+    ],
+    "hint": "Ду шартро бо and пайваст кунед.",
+    "mustContain": [
+      "and"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "True and False чист?",
+      "options": [
+        "True",
+        "False",
+        "Хато"
+      ],
+      "answer": 1,
+      "explanation": "and барои ду True лозим аст."
+    },
+    {
+      "q": "not False чист?",
+      "options": [
+        "True",
+        "False",
+        "None"
+      ],
+      "answer": 0,
+      "explanation": "not қиматро баракс мекунад."
+    },
+    {
+      "q": "False or True чист?",
+      "options": [
+        "False",
+        "True",
+        "Хато"
+      ],
+      "answer": 1,
+      "explanation": "or барои як True кифоя аст."
+    }
+  ]
+}

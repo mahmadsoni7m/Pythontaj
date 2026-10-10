@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "lesson-034",
+  "number": 34,
+  "module": "m6",
+  "title": "Модулҳо ва import",
+  "description": "Истифодаи кодҳои тайёр.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Истифодаи import",
+    "from ... import",
+    "Модулҳои math ва random"
+  ],
+  "explanation": [
+    "Модул — файлест, ки функсияҳо ва тағйирёбандаҳои тайёр дорад. Бо import пайваст мешавад: import math. Баъд math.sqrt(16) ва ғайра.",
+    "from math import sqrt имкон медиҳад, ки sqrt-ро бе пешванд истифода барем. as номи кӯтоҳ медиҳад: import math as m.",
+    "Python китобхонаи калони стандартӣ дорад: math, random, datetime, json ва ғайра."
+  ],
+  "examples": [
+    {
+      "title": "math",
+      "code": "import math\nprint(math.sqrt(16))\nprint(math.pi)\nprint(math.floor(3.9))",
+      "stdin": "",
+      "steps": [
+        "math.sqrt реша мегирад.",
+        "math.pi адади π аст."
+      ],
+      "output": "4.0\n3.141592653589793\n3\n"
+    },
+    {
+      "title": "random бо seed",
+      "code": "import random\nrandom.seed(1)\nprint(random.randint(1, 10) in range(1, 11))\nfrom math import pow\nprint(pow(2, 4))",
+      "stdin": "",
+      "steps": [
+        "seed натиҷаро такроршаванда мекунад.",
+        "randint(a, b) адади тасодуфӣ медиҳад."
+      ],
+      "output": "True\n16.0\n"
+    }
+  ],
+  "notes": [
+    "import одатан дар боло навишта мешавад.",
+    "Номи модули худро math.py нагузоред — бо стандартӣ бархӯрд мекунад."
+  ],
+  "mistakes": [
+    "Фаромӯш кардани import: NameError.",
+    "Навиштани `sqrt(9)` бе `math.` пас аз `import math`."
+  ],
+  "exercise": {
+    "prompt": "Модули math-ро пайваст кунед ва реша аз 81-ро бароред.",
+    "starter": "",
+    "solution": "import math\nprint(math.sqrt(81))",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "9.0\n"
+      }
+    ],
+    "hint": "import math ва math.sqrt(81)",
+    "mustContain": [
+      "import"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "import чӣ мекунад?",
+      "options": [
+        "Модулро пайваст мекунад",
+        "Файлро нест мекунад",
+        "Хатоҳоро дастгир мекунад"
+      ],
+      "answer": 0,
+      "explanation": "import кодҳои тайёрро ба барнома меорад."
+    },
+    {
+      "q": "math.sqrt(9) чист?",
+      "options": [
+        "3.0",
+        "81",
+        "3"
+      ],
+      "answer": 0,
+      "explanation": "sqrt ҳамеша float медиҳад."
+    },
+    {
+      "q": "import math as m баъд кадом дуруст аст?",
+      "options": [
+        "m.sqrt(4)",
+        "math.m(4)",
+        "as.sqrt(4)"
+      ],
+      "answer": 0,
+      "explanation": "as номи кӯтоҳ медиҳад."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "id": "lesson-006",
+  "number": 6,
+  "module": "m1",
+  "title": "Навъҳои маълумот",
+  "description": "int, float, str ва bool — навъҳои асосӣ.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Фарқ кардани int, float, str, bool",
+    "Истифодаи type()",
+    "Фаҳмидани он, ки навъ чӣ таъсир дорад"
+  ],
+  "explanation": [
+    "Ҳар қимат навъ дорад. int — адади бутун (5, -3). float — адади касрӣ (3.14). str — матн (\"салом\"). bool — қимати мантиқӣ: True ё False.",
+    "Навъи қимат муайян мекунад, ки бо он чӣ амалҳо мумкин аст: ададҳоро ҷамъ кардан, матнҳоро пайваст кардан мумкин аст.",
+    "Бо функсияи type() навъи қиматро мебинем."
+  ],
+  "examples": [
+    {
+      "title": "type()",
+      "code": "print(type(10))\nprint(type(3.14))\nprint(type(\"Салом\"))\nprint(type(True))",
+      "stdin": "",
+      "steps": [
+        "Натиҷа номи синфро нишон медиҳад.",
+        "True/False бо ҳарфи калон навишта мешаванд."
+      ],
+      "output": "<class 'int'>\n<class 'float'>\n<class 'str'>\n<class 'bool'>\n"
+    },
+    {
+      "title": "Навъ ва амал",
+      "code": "print(5 + 3)\nprint(\"5\" + \"3\")\nprint(2.5 * 2)",
+      "stdin": "",
+      "steps": [
+        "Ададҳо ҷамъ мешаванд.",
+        "Матнҳо пайваст мешаванд.",
+        "float ҳангоми зарб float мемонад."
+      ],
+      "output": "8\n53\n5.0\n"
+    }
+  ],
+  "notes": [
+    "Адади касрӣ бо нуқта навишта мешавад: 2.5, на 2,5.",
+    "\"5\" ва 5 қиматҳои гуногунанд."
+  ],
+  "mistakes": [
+    "Навиштани `true` ба ҷои `True`.",
+    "Омехта кардани матн ва адад: `\"Сол: \" + 2026` TypeError медиҳад."
+  ],
+  "exercise": {
+    "prompt": "Чор тағйирёбанда созед (int, float, str, bool) ва навъи ҳар кадомро бо type() бароред.",
+    "starter": "",
+    "solution": "a = 1\nb = 2.5\nc = \"матн\"\nd = True\nprint(type(a))\nprint(type(b))\nprint(type(c))\nprint(type(d))",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "<class 'int'>\n<class 'float'>\n<class 'str'>\n<class 'bool'>\n"
+      }
+    ],
+    "hint": "type() дар дохили print().",
+    "mustContain": [
+      "type"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "3.14 кадом навъ аст?",
+      "options": [
+        "int",
+        "float",
+        "str"
+      ],
+      "answer": 1,
+      "explanation": "Адади касрӣ float номида мешавад."
+    },
+    {
+      "q": "Кадом қиматҳои bool вуҷуд доранд?",
+      "options": [
+        "yes, no",
+        "True, False",
+        "1, 2"
+      ],
+      "answer": 1,
+      "explanation": "bool танҳо ду қимат дорад: True ва False."
+    },
+    {
+      "q": "\"7\" кадом навъ аст?",
+      "options": [
+        "int",
+        "float",
+        "str"
+      ],
+      "answer": 2,
+      "explanation": "Ҳар чизе, ки дар нохунак аст, матн (str) аст."
+    }
+  ]
+}

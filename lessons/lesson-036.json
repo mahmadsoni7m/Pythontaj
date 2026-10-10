@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "id": "lesson-036",
+  "number": 36,
+  "module": "m6",
+  "title": "Comprehensions",
+  "description": "Сохтани рӯйхат дар як сатр.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Рӯйхати comprehension",
+    "Бо шарт",
+    "Dict ва set comprehension"
+  ],
+  "explanation": [
+    "List comprehension — роҳи кӯтоҳи сохтани рӯйхат: [ифода for x in пайдарпайӣ]. Ба ҷои чанд сатр бо for ва append як сатр менависем.",
+    "Шарт илова кардан мумкин аст: [x for x in a if x > 0]. Ҳамин тавр dict {k: v for ...} ва set {x for ...} сохта мешавад.",
+    "Агар comprehension хеле дароз шавад, давраи оддиро истифода баред."
+  ],
+  "examples": [
+    {
+      "title": "Рӯйхат",
+      "code": "squares = [x * x for x in range(1, 6)]\nprint(squares)\nevens = [x for x in range(10) if x % 2 == 0]\nprint(evens)",
+      "stdin": "",
+      "steps": [
+        "Ҳар x ба x*x табдил мешавад.",
+        "if танҳо ҷуфтҳоро мегузорад."
+      ],
+      "output": "[1, 4, 9, 16, 25]\n[0, 2, 4, 6, 8]\n"
+    },
+    {
+      "title": "Луғат ва set",
+      "code": "words = [\"ол\", \"себ\", \"нок\"]\nd = {w: len(w) for w in words}\nprint(d)\nprint(sorted({len(w) for w in words}))",
+      "stdin": "",
+      "steps": [
+        "Луғат: калид w, қимат len(w).",
+        "Set дарозии ягонаро нигоҳ медорад."
+      ],
+      "output": "{'ол': 2, 'себ': 3, 'нок': 3}\n[2, 3]\n"
+    }
+  ],
+  "notes": [
+    "Comprehension зуд ва хонданаш осон аст.",
+    "Дар [ ] — рӯйхат, дар { } — set/dict."
+  ],
+  "mistakes": [
+    "Навиштани якчанд for дар як comprehension бе зарурат.",
+    "Тағйирёбанда пас аз comprehension ҳамчун ном бо ҳамон ном дастрас нест."
+  ],
+  "exercise": {
+    "prompt": "Бо comprehension квадратҳои ададҳои 1..5-ро созед ва рӯйхатро бароред.",
+    "starter": "",
+    "solution": "print([n * n for n in range(1, 6)])",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "[1, 4, 9, 16, 25]\n"
+      }
+    ],
+    "hint": "[n * n for n in range(...)]",
+    "mustContain": [
+      "for"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "[x*2 for x in [1,2,3]] чист?",
+      "options": [
+        "[2, 4, 6]",
+        "[1, 2, 3]",
+        "[2, 3, 4]"
+      ],
+      "answer": 0,
+      "explanation": "Ҳар x ду маротиба мешавад."
+    },
+    {
+      "q": "[x for x in range(5) if x > 2] чист?",
+      "options": [
+        "[3, 4]",
+        "[2, 3, 4]",
+        "[0, 1, 2]"
+      ],
+      "answer": 0,
+      "explanation": "Танҳо x > 2."
+    },
+    {
+      "q": "Dict comprehension кадом қавс дорад?",
+      "options": [
+        "{ }",
+        "[ ]",
+        "( )"
+      ],
+      "answer": 0,
+      "explanation": "Қавсҳои фигурӣ."
+    }
+  ]
+}

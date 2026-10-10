@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "id": "lesson-032",
+  "number": 32,
+  "module": "m6",
+  "title": "Кор бо файлҳо",
+  "description": "Хондан ва навиштани файлҳои матнӣ.",
+  "version": 1,
+  "points": 20,
+  "objectives": [
+    "Кушодани файл бо open()",
+    "Навиштан ва хондан",
+    "Истифодаи with"
+  ],
+  "explanation": [
+    "open(ном, режим) файлро мекушояд. Режимҳо: \"w\" — навиштан (файли кӯҳна пок мешавад), \"a\" — илова, \"r\" — хондан. Барои тоҷикӣ encoding=\"utf-8\" нависед.",
+    "Беҳтарин усул: with open(...) as f: — файл худкор баста мешавад. f.write(матн) менависад, f.read() ҳамаро мехонад, барои сатр ба сатр: for line in f.",
+    "Дар PythonТаҷ файлҳо танҳо дар ҷузвдони махсуси барнома сохта мешаванд ва аз дигар ҷойҳои телефон дастрасӣ нест."
+  ],
+  "examples": [
+    {
+      "title": "Навиштан ва хондан",
+      "code": "with open(\"note.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"Салом\\n\")\n    f.write(\"Python\\n\")\n\nwith open(\"note.txt\", \"r\", encoding=\"utf-8\") as f:\n    print(f.read())",
+      "stdin": "",
+      "steps": [
+        "Режими w файлро месозад.",
+        "with баъд аз блок файлро мепӯшонад.",
+        "read() ҳамаи матнро мегирад."
+      ],
+      "output": "Салом\nPython\n\n"
+    },
+    {
+      "title": "Сатр ба сатр",
+      "code": "with open(\"list.txt\", \"w\", encoding=\"utf-8\") as f:\n    for i in range(1, 4):\n        f.write(f\"Сатри {i}\\n\")\n\nwith open(\"list.txt\", encoding=\"utf-8\") as f:\n    for line in f:\n        print(line.strip())",
+      "stdin": "",
+      "steps": [
+        "Ҳар сатр бо \\n анҷом меёбад.",
+        "strip() онро мебардорад."
+      ],
+      "output": "Сатри 1\nСатри 2\nСатри 3\n"
+    }
+  ],
+  "notes": [
+    "Режими w маълумоти кӯҳнаро нест мекунад.",
+    "Файли мавҷуднабуда дар режими r FileNotFoundError медиҳад."
+  ],
+  "mistakes": [
+    "Фаромӯш кардани маҳкам кардани файл (бо with ин нест).",
+    "Хондан аз файле, ки нанавиштаед."
+  ],
+  "exercise": {
+    "prompt": "Файли hello.txt созед ва дар он Салом нависед; баъд онро хонед ва бароред.",
+    "starter": "",
+    "solution": "with open(\"hello.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"Салом\")\nwith open(\"hello.txt\", encoding=\"utf-8\") as f:\n    print(f.read())",
+    "tests": [
+      {
+        "stdin": "",
+        "expected": "Салом\n"
+      }
+    ],
+    "hint": "with open(...) as f:",
+    "mustContain": [
+      "open",
+      "with"
+    ]
+  },
+  "quiz": [
+    {
+      "q": "Режими \"w\" чӣ мекунад?",
+      "options": [
+        "Менависад (кӯҳнаро нест мекунад)",
+        "Мехонад",
+        "Мефизояд"
+      ],
+      "answer": 0,
+      "explanation": "w — навиштан бо тоза кардани файл."
+    },
+    {
+      "q": "with open(...) чаро хуб аст?",
+      "options": [
+        "Файлро худкор мепӯшонад",
+        "Суръатро зиёд мекунад",
+        "Ном иваз мекунад"
+      ],
+      "answer": 0,
+      "explanation": "with баъди блок файлро бо эҳтиёт мебандад."
+    },
+    {
+      "q": "f.read() чӣ медиҳад?",
+      "options": [
+        "Тамоми матн",
+        "Танҳо як рамз",
+        "Рақами сатрҳо"
+      ],
+      "answer": 0,
+      "explanation": "read() ҳамаи матнро мегардонад."
+    }
+  ]
+}
