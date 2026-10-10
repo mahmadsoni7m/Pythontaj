@@ -1,19 +1,15 @@
-/* New artwork: mascot "Тоҷ" 3D Duolingo-style with blink + float - pro */
+/* New artwork: mascot "Тоҷ" 3D - fixed (no blue eyes) */
 (function () {
   function mascot(opts) {
     opts = opts || {};
     const cls = opts.cls || '';
     const extra = opts.hero ? ' toj-hero' : (opts.center ? ' toj-center' : ' toj-float');
-    // wrapper enables blink + float without breaking layout
     return '<div class="toj-wrap ' + extra + ' ' + cls + '" style="' + (opts.wrapStyle||'') + '">'
       + '<img class="toj-img" src="./assets/toj.png" alt="Тоҷ" loading="eager">'
-      + '<span class="toj-eyelid toj-eyelid-l"></span><span class="toj-eyelid toj-eyelid-r"></span>'
       + '</div>';
   }
-
   const icn = (n) => window.icon ? window.icon(n) : '';
   const scenes = [
-    // 1: hero - onboarding
     () => '<div class="glow"></div><div class="float" style="width:220px;position:relative;z-index:1">' + mascot({}) + '</div>'
       + '<span class="tag float2" style="left:2%;top:14%;color:var(--green)">print()</span><span class="tag float" style="right:0;top:30%;color:#8A7CFF">{ }</span>'
       + '<span class="tag float2" style="left:8%;bottom:10%;color:var(--gold)"># Python</span>',
@@ -22,12 +18,7 @@
     () => '<div class="glow"></div><div class="float" style="z-index:1;width:150px;height:150px;border-radius:44px;display:grid;place-items:center;background:linear-gradient(135deg,#5B4CFF,#6E5CFF);box-shadow:0 20px 50px rgba(94,92,255,.5);color:#fff">' + icn('trophy').replace('class="i ', 'style="width:80px;height:80px" class="i ') + '</div><span class="tag float2" style="left:6%;top:18%;color:#FF9A3D">' + icn('flame') + '</span><span class="tag float" style="right:4%;top:44%;color:var(--gold)">' + icn('star') + '</span><span class="tag float2" style="left:12%;bottom:12%;color:var(--green)">+20 XP</span>',
     () => '<div class="glow"></div><div class="float" style="z-index:1;width:150px;height:150px;border-radius:44px;display:grid;place-items:center;background:var(--s2);border:1px solid var(--line);color:var(--green)">' + icn('download').replace('class="i ', 'style="width:76px;height:76px" class="i ') + '</div><span class="tag float2" style="right:6%;top:16%;color:var(--muted)">' + icn('wifioff') + '</span><span class="tag float" style="left:4%;bottom:16%;color:var(--green)">42 ' + (window.I18N ? I18N.t('lessons_word') : 'дарс') + '</span>',
   ];
-
-  // helper for home hero card (called from app.js)
-  function heroCardArt(){
-    return mascot({hero:true, wrapStyle:'width:132px;'});
-  }
-
+  function heroCardArt(){ return mascot({hero:true, wrapStyle:'width:118px;'}); }
   function confetti() {
     if (!window.requestAnimationFrame || window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
     const c = document.createElement('canvas'); const W = (c.width = innerWidth), H = (c.height = innerHeight), x = c.getContext('2d'); if (!x) return null;
@@ -37,4 +28,4 @@
   }
   window.Art = { mascot, heroCardArt, scene: (i) => scenes[i](), confetti };
 })();
-                                                   
+    
