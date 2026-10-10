@@ -20,8 +20,8 @@
 html,body{margin:0;height:100%;background:var(--bg);color:var(--text);overflow:hidden;
   font:16px/1.5 "Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;-webkit-font-smoothing:antialiased}
 #app{position:fixed;inset:0;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);
-  background:radial-gradient(800px 420px at 100% -8%,rgba(124,92,255,.26),transparent 62%),
-  radial-gradient(640px 380px at -12% 8%,rgba(255,111,181,.13),transparent 60%),var(--bg)}
+  background:radial-gradient(800px 420px at 100% -8%,rgba(94,92,255,.22),transparent 62%),
+  radial-gradient(640px 380px at -12% 8%,rgba(94,92,255,.12),transparent 60%),var(--bg)}
 :root[data-theme=light] #app{background:radial-gradient(800px 420px at 100% -8%,rgba(124,92,255,.14),transparent 62%),var(--bg)}
 #screen{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:0 20px 28px;scrollbar-width:none}
 #screen::-webkit-scrollbar{display:none}
@@ -227,3 +227,20 @@ textarea.stdin{min-height:56px} input.field{font-family:inherit;font-size:16px} 
 @keyframes ripple{0%{transform:scale(.92);opacity:1}100%{transform:scale(1.25);opacity:0}} @keyframes bob{50%{transform:translateY(-5px)}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 .tapx{cursor:pointer}
+
+/* ---------- Toj 3D mascot - blink + float (professional) ---------- */
+.toj-wrap{position:relative;display:inline-block;line-height:0;isolation:isolate;animation:tojFloat 3.6s ease-in-out infinite;will-change:transform}
+.toj-wrap.toj-hero{width:132px;position:absolute;right:6px;bottom:-8px;z-index:2;animation:tojFloatHero 3.8s ease-in-out infinite}
+.toj-wrap.toj-center{width:148px;margin:0 auto;display:block}
+.toj-img{width:100%;height:auto;object-fit:contain;display:block;filter:drop-shadow(0 14px 24px rgba(0,0,0,.32));pointer-events:none;user-select:none}
+.toj-eyelid{position:absolute;background:#6E5CFF;border-radius:50%;pointer-events:none;z-index:3;transform-origin:center top;animation:tojBlink 4.5s ease-in-out infinite}
+.toj-eyelid-l{left:22%;top:31%;width:22%;height:16%}
+.toj-eyelid-r{right:22%;top:31%;width:22%;height:16%}
+@keyframes tojFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-6px) rotate(1deg)}}
+@keyframes tojFloatHero{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}50%{transform:translateY(-7px) rotate(1deg) scale(1.02)}}
+@keyframes tojBlink{0%,42%,44%,100%{transform:scaleY(0);opacity:0}43%{transform:scaleY(1);opacity:1}}
+/* fix hero card so mascot doesn't cover button */
+.card.hero{padding-right:138px;min-height:168px}
+.card.hero .toj-wrap.toj-hero{right:2px;bottom:-6px}
+@media(max-width:380px){.card.hero{padding-right:118px;min-height:158px}.toj-wrap.toj-hero{width:118px;right:0}}
+@media(prefers-reduced-motion:reduce){.toj-wrap,.toj-eyelid{animation:none!important}}
