@@ -30,7 +30,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--text);overflow:h
 #screen{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:0 20px 28px;scrollbar-width:none}
 #screen::-webkit-scrollbar{display:none}
 #screen.has-tab{padding-bottom:calc(var(--tab) + 44px + env(safe-area-inset-bottom))}
-#screen.has-dock{padding-bottom:calc(var(--dock) + 12px + env(safe-area-inset-bottom))}
+#screen.has-dock{padding-bottom:calc(var(--dock) + 28px + env(safe-area-inset-bottom))}
 #screen>*{animation:up .36s cubic-bezier(.2,.8,.2,1) both}
 @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 h1,h2,h3{margin:0;line-height:1.2;letter-spacing:-.02em}
@@ -147,7 +147,7 @@ svg.i.sm{width:16px;height:16px} svg.i.lg{width:32px;height:32px}
 .seg4 button:after{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--grad);opacity:0;transition:opacity .22s}
 .seg4 button.done{background:var(--green)} .seg4 button.on:after{opacity:1}
 .stagename{font-size:12px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
-.dock{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:12;display:flex;gap:12px;padding:14px 20px calc(14px + env(safe-area-inset-bottom));
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:12;display:flex;gap:12px;padding:14px 20px calc(14px + env(safe-area-inset-bottom));
   background:linear-gradient(transparent 0%,var(--bg) 46%)} .dock .btn{flex:1} .dock .btn.back{flex:none;width:56px;padding:0}
 .sec{border-radius:var(--r2);padding:16px 18px;margin:0 0 14px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.02),transparent),linear-gradient(180deg,var(--s2),var(--s1));box-shadow:var(--shadow)}
 .sec .label{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px}
@@ -231,26 +231,23 @@ textarea.stdin{min-height:56px} input.field{font-family:inherit;font-size:16px} 
   .stop{width:144px} .stop:nth-child(odd){transform:translateX(-32px)} .stop:nth-child(even){transform:translateX(32px)}
   .pg-card{padding:14px 12px} .pg-card .ico{width:44px;height:44px}
   .tabbar{left:10px;right:10px}
-  .card.hero{padding-right:116px;min-height:160px}
-  .toj-wrap.toj-hero{width:106px;right:8px;top:10px;left:auto;bottom:auto}
 }
+
 
 /* ---------- Toj mascot 3D - pro animations ---------- */
 .toj-wrap{position:relative;display:inline-block;line-height:0;isolation:isolate;animation:tojFloat 3.6s ease-in-out infinite;will-change:transform}
-.toj-wrap.toj-hero{width:122px;position:absolute;right:10px;top:12px;left:auto;bottom:auto;z-index:2;animation:tojFloatHero 3.8s ease-in-out infinite}
+.toj-wrap.toj-hero{width:112px;position:absolute;left:18px;bottom:-12px;z-index:2;animation:tojFloatHero 3.8s ease-in-out infinite}
 .toj-wrap.toj-center{width:148px;margin:0 auto;display:block}
 .toj-wrap.toj-float{animation:tojFloat 3.6s ease-in-out infinite}
 .toj-img{width:100%;height:auto;object-fit:contain;display:block;filter:drop-shadow(0 14px 24px rgba(0,0,0,.32));pointer-events:none;user-select:none}
+
+
+
+
 @keyframes tojFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-6px) rotate(1deg)}}
 @keyframes tojFloatHero{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}50%{transform:translateY(-7px) rotate(1deg) scale(1.02)}}
-.card.hero{padding-right:132px;min-height:168px}
-@media(prefers-reduced-motion:reduce){.toj-wrap{animation:none!important}}
 
+.card.hero{padding-bottom:86px;min-height:176px}
 
-/* ---------- victorina fix - no big black gap ---------- */
-#screen.has-dock{display:flex;flex-direction:column}
-#screen.has-dock .lhead{flex:none}
-#screen.has-dock > .card{flex:none}
-#screen.has-dock .sec{margin-bottom:10px}
-.opt{margin:8px 0;padding:13px 14px;min-height:48px}
-.card .btn.block{margin-top:12px}
+@media(max-width:380px){.card.hero{padding-bottom:86px;min-height:176px}.toj-wrap.toj-hero{width:112px;position:absolute;left:18px;bottom:-12px;z-index:2;animation:tojFloatHero 3.8s ease-in-out infinite}}
+@media(prefers-reduced-motion:reduce){.toj-wrap,.toj-eyelid{animation:none!important}}
