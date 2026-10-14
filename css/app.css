@@ -230,7 +230,7 @@ textarea.stdin{min-height:56px} input.field{font-family:inherit;font-size:16px} 
 
 /* ---------- Toj 3D mascot - blink + float (professional) ---------- */
 .toj-wrap{position:relative;display:inline-block;line-height:0;isolation:isolate;animation:tojFloat 3.6s ease-in-out infinite;will-change:transform}
-.toj-wrap.toj-hero{width:132px;position:absolute;right:6px;bottom:-8px;z-index:2;animation:tojFloatHero 3.8s ease-in-out infinite}
+.toj-wrap.toj-hero{width:122px;position:absolute;right:10px;top:12px;left:auto;bottom:auto;z-index:2;animation:tojFloatHero 3.8s ease-in-out infinite}
 .toj-wrap.toj-center{width:148px;margin:0 auto;display:block}
 .toj-img{width:100%;height:auto;object-fit:contain;display:block;filter:drop-shadow(0 14px 24px rgba(0,0,0,.32));pointer-events:none;user-select:none}
 .toj-eyelid{position:absolute;background:#6E5CFF;border-radius:50%;pointer-events:none;z-index:3;transform-origin:center top;animation:tojBlink 4.5s ease-in-out infinite}
@@ -240,7 +240,7 @@ textarea.stdin{min-height:56px} input.field{font-family:inherit;font-size:16px} 
 @keyframes tojFloatHero{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}50%{transform:translateY(-7px) rotate(1deg) scale(1.02)}}
 @keyframes tojBlink{0%,42%,44%,100%{transform:scaleY(0);opacity:0}43%{transform:scaleY(1);opacity:1}}
 /* fix hero card so mascot doesn't cover button */
-.card.hero{padding-right:138px;min-height:168px}
+.card.hero{padding-right:132px;min-height:168px}
 .card.hero .toj-wrap.toj-hero{right:2px;bottom:-6px}
 @media(max-width:380px){.card.hero{padding-right:118px;min-height:158px}.toj-wrap.toj-hero{width:118px;right:0}}
 @media(prefers-reduced-motion:reduce){.toj-wrap,.toj-eyelid{animation:none!important}}
