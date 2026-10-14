@@ -227,3 +227,54 @@ textarea.stdin{min-height:56px} input.field{font-family:inherit;font-size:16px} 
 @keyframes ripple{0%{transform:scale(.92);opacity:1}100%{transform:scale(1.25);opacity:0}} @keyframes bob{50%{transform:translateY(-5px)}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 .tapx{cursor:pointer}
+/* Fix: PythonTaj responsive decorative images */
+
+.onb .scene {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 260px;
+  max-height: 42vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.onb .scene img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 75%;
+  max-height: 36vh;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Prevent decorative images from overflowing */
+.onb .scene .float,
+.onb .scene .float2 {
+  max-width: 75%;
+  max-height: 36vh;
+  object-fit: contain;
+}
+
+/* Keep lesson content above decorative artwork */
+.sec,
+.card {
+  position: relative;
+  z-index: 1;
+}
+
+/* Smaller screens */
+@media (max-width: 380px) {
+  .onb .scene {
+    min-height: 220px;
+    max-height: 35vh;
+  }
+
+  .onb .scene img {
+    max-width: 68%;
+    max-height: 30vh;
+  }
+}
