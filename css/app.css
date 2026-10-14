@@ -278,3 +278,52 @@ textarea.stdin{min-height:56px} input.field{font-family:inherit;font-size:16px} 
     max-height: 30vh;
   }
 }
+/* PythonTaj — fix oversized mascot image */
+
+.toj-wrap {
+  width: 100%;
+  max-width: 240px;
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.toj-img {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Keep onboarding artwork inside the screen */
+.onb .scene {
+  flex: 1;
+  min-height: 220px;
+  max-height: 42vh;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Small Android screens */
+@media (max-width: 380px) {
+  .toj-wrap {
+    max-width: 190px;
+  }
+
+  .toj-img {
+    max-width: 190px;
+    max-height: 220px;
+  }
+
+  .onb .scene {
+    min-height: 180px;
+    max-height: 36vh;
+  }
+}
+
+/* Lesson screen: prevent decorative artwork overflow */
+#screen {
+  overflow-x: hidden;
+}
