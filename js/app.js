@@ -289,7 +289,7 @@
   function setBusy(b) {
     S.lesson && (S.lesson.busy = b);
     const run = $('#runbtn');
-    if (run) { run.innerHTML = b ? icon('stop', 'sm') + t('stop') : icon('play', 'sm') + t('run'); run.dataset.a = b ? 'exStop' : 'exRun'; }
+    if (run) { run.innerHTML = b ? icon('stop', 'sm') + t('stop') : icon('play', 'sm') + t('run'); run.dataset.a = b ? 'exStop' : 'exSubmit'; }
     if (run) run.disabled = b;
   }
   A.extab = (d) => {
@@ -368,14 +368,14 @@
     const L = S.lesson, P = Progress.get(), q = S.quiz, best = P.quiz[L.id];
     const head = '<div class="label">' + icon('award', 'sm') + t('quiz') + '</div>';
     if (!q) {
-      // Start immediately when the learner enters the quiz stage.
-      startQuiz(L.data.quiz, false);
+      box.innerHTML = head + (best ? '<p class="muted small">' + t('score') + ': ' + best.best + '/' + best.total + '</p>' : '') +
+        '<button class="btn primary block" data-a="quizStart">' + t('quiz_start') + '</button>';
       return;
     }
     if (q.finished) {
       const s = q.summary;
       box.innerHTML = head + '<div class="center"><div class="ring" style="--p:' + Math.round(s.ratio * 100) + ';margin:6px auto"><b>' + s.correct + '/' + s.total + '</b></div><h3 class="mt">' + (s.passed ? t('quiz_pass') : t('quiz_fail')) + '</h3>' +
-        '<p class="muted">' + 'Дуруст: ' + s.correct + ' · Хато: ' + (s.total - s.correct + (q.wrongAttempts || 0)) + '</p>' +
+        '<p class="muted">Дуруст: ' + s.correct + ' · Хато: ' + (q.wrongAttempts || 0) + '</p>' +
         (q.gained ? '<p class="ok">+' + q.gained + ' ' + t('pts') + '</p>' : '') +
         (s.passed ? '' : '<p class="muted">Барои гирифтани хол ба ҳамаи саволҳо дуруст ҷавоб деҳ.</p>') +
         '<button class="btn primary block mt" data-a="quizStart">' + t('retry_all') + '</button></div>';
@@ -386,12 +386,11 @@
       '<h3 class="mt">' + PT.richText(it.q) + '</h3>' +
       it.options.map((o, i) => {
         const cls = q.picked == null ? '' : (o.correct ? 'good' : (i === q.picked ? 'bad' : ''));
-        const disabled = q.picked != null && q.lastCorrect;
-        return '<button class="opt ' + cls + '" data-a="qpick" data-i="' + i + '" ' + (disabled ? 'disabled' : '') + '>' + esc(o.text) + '</button>';
+        return '<button class="opt ' + cls + '" data-a="qpick" data-i="' + i + '" ' + (q.picked != null ? 'disabled' : '') + '>' + esc(o.text) + '</button>';
       }).join('') +
       (q.picked != null ? '<div class="sec ' + (q.lastCorrect ? 'goal' : 'mistake') + '"><div class="label">' +
         (q.lastCorrect ? t('correct') : t('wrong')) + '</div>' + PT.richText(it.explanation) + '</div>' +
-        (q.lastCorrect ? '<p class="small muted">Гузариш ба саволи нав…</p>' :
+        (q.lastCorrect ? '<button class="btn primary block" data-a="qnext">' + (q.i === n - 1 ? t('finish') : t('next')) + '</button>' :
           '<button class="btn primary block" data-a="qretry">Боз кӯшиш кардан</button>') : '');
   }
   function startQuiz(items, practice) {
@@ -434,7 +433,6 @@
       q.lastCorrect = true;
       Sound.play('ok');
       renderQuiz();
-      setTimeout(() => { if (S.quiz === q) A.qnext(); }, 650);
     } else {
       q.wrongAttempts = (q.wrongAttempts || 0) + 1;
       q.picked = Number(d.i);
