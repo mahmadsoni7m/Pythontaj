@@ -253,7 +253,7 @@
     if (next) {
       next.innerHTML = L.stage === 3 ? t('finish') : t('continue') + icon('right', 'sm');
       // The exercise has its own Run/Check button; no redundant Continue button.
-      next.hidden = L.stage === 2;
+      next.hidden = L.stage === 2 || L.stage === 3;
     }
     $screen().scrollTop = 0;
   }
@@ -369,49 +369,50 @@
     const head = '<div class="label">' + icon('award', 'sm') + t('quiz') + '</div>';
     if (!q) {
       box.innerHTML = head + (best ? '<p class="muted small">' + t('score') + ': ' + best.best + '/' + best.total + '</p>' : '') +
-        '<button class="btn primary block" data-a="quizStart">Оғози викторина</button>';
+        '<button class="btn primary block" data-a="quizStart">' + t('quiz_start') + '</button>';
       return;
     }
     if (q.finished) {
       const s = q.summary;
       box.innerHTML = head + '<div class="center"><div class="ring" style="--p:' + Math.round(s.ratio * 100) + ';margin:6px auto"><b>' + s.correct + '/' + s.total + '</b></div><h3 class="mt">' + (s.passed ? t('quiz_pass') : t('quiz_fail')) + '</h3>' +
-        '<p class="muted">Дуруст: ' + s.correct + ' · Хато: ' + (s.total - s.correct) + '</p>' +
+        '<p class="muted">Дуруст: ' + s.correct + ' · Хато: ' + (q.wrongAttempts || 0) + '</p>' +
         (q.gained ? '<p class="ok">+' + q.gained + ' ' + t('pts') + '</p>' : '') +
-        (s.passed ? '' : '<p class="muted">Барои гирифтани хол ҳамаи саволҳоро дуруст ҷавоб деҳ.</p>') +
-        '<button class="btn primary block mt" data-a="quizStart">Аз сар оғоз кардан</button></div>';
+        (s.passed ? '' : '<p class="muted">Барои гирифтани хол ба ҳамаи саволҳо дуруст ҷавоб деҳ.</p>') +
+        '<button class="btn primary block mt" data-a="quizStart">' + t('retry_all') + '</button></div>';
       return;
     }
     const it = q.items[q.i], n = q.items.length;
     box.innerHTML = head + '<div class="row between small muted"><span>' + t('question_of') + ' ' + (q.i + 1) + '/' + n + '</span></div><div class="mt">' + bar(q.i / n * 100) + '</div>' +
       '<h3 class="mt">' + PT.richText(it.q) + '</h3>' +
       it.options.map((o, i) => {
-        let cls = '';
-        if (q.picked != null) cls = o.correct ? 'good' : (i === q.picked ? 'bad' : '');
+        const cls = q.picked == null ? '' : (o.correct ? 'good' : (i === q.picked ? 'bad' : ''));
         return '<button class="opt ' + cls + '" data-a="qpick" data-i="' + i + '" ' + (q.picked != null ? 'disabled' : '') + '>' + esc(o.text) + '</button>';
       }).join('') +
       (q.picked != null ? '<div class="sec ' + (q.lastCorrect ? 'goal' : 'mistake') + '"><div class="label">' +
         (q.lastCorrect ? t('correct') : t('wrong')) + '</div>' + PT.richText(it.explanation) + '</div>' +
-        '<button class="btn primary block" data-a="qnext">' + (q.i === n - 1 ? 'Анҷом' : 'Минбаъд') + '</button>' : '');
+        (q.lastCorrect ? '<button class="btn primary block" data-a="qnext">' + (q.i === n - 1 ? t('finish') : t('next')) + '</button>' :
+          '<button class="btn primary block" data-a="qretry">Боз кӯшиш кардан</button>') : '');
   }
   function startQuiz(items, practice) {
-    S.quiz = { items: PT.buildQuiz(items), i: 0, results: [], picked: null, lastCorrect: false, finished: false, practice, wrongAttempts: 0, gained: 0 };
+    S.quiz = { items: PT.buildQuiz(items), i: 0, results: [], picked: null, lastCorrect: false, finished: false, practice, wrongAttempts: 0 };
     renderQuiz();
   }
   A.quizStart = () => startQuiz(S.lesson.data.quiz, false);
   A.qretry = () => {
     const q = S.quiz;
-    if (!q || q.finished) return;
+    if (!q || q.finished || q.lastCorrect) return;
     q.picked = null;
     renderQuiz();
   };
   A.qnext = () => {
     const q = S.quiz;
-    if (!q || q.finished || q.picked == null) return;
+    if (!q || q.finished || !q.lastCorrect) return;
     if (q.i < q.items.length - 1) {
       q.i++; q.picked = null; q.lastCorrect = false; renderQuiz(); return;
     }
     q.finished = true;
     q.summary = PT.scoreQuiz(q.results);
+    // No points or quiz completion until every question is answered correctly.
     q.summary.passed = q.summary.correct === q.summary.total && q.summary.total > 0;
     if (!q.practice && q.summary.passed) {
       const P = Progress.get(), was = !!P.completed[S.lesson.id];
@@ -424,14 +425,21 @@
     renderQuiz();
   };
   A.qpick = (d) => {
-    const q = S.quiz; if (!q || q.finished || q.picked != null) return;
+    const q = S.quiz; if (!q || q.finished || q.lastCorrect || q.picked != null) return;
     q.picked = Number(d.i);
     const ok = !!q.items[q.i].options[q.picked].correct;
-    q.results[q.i] = ok;
-    q.lastCorrect = ok;
-    if (!ok) q.wrongAttempts = (q.wrongAttempts || 0) + 1;
-    Sound.play(ok ? 'ok' : 'bad');
-    renderQuiz();
+    if (ok) {
+      q.results[q.i] = true;
+      q.lastCorrect = true;
+      Sound.play('ok');
+      renderQuiz();
+    } else {
+      q.wrongAttempts = (q.wrongAttempts || 0) + 1;
+      q.picked = Number(d.i);
+      q.lastCorrect = false;
+      Sound.play('bad');
+      renderQuiz();
+    }
   };
   /* ---------- downloads ---------- */
   async function doDownload(id) {
