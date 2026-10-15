@@ -203,7 +203,7 @@
     }
     const ex = data.exercise, done = !!P.completed[id];
     const showStdin = ex.tests.some((x) => x.stdin);
-    S.lesson = { id, data, entry, editor: null, tab: 'code', fails: 0, busy: false, stage: 0 };
+    S.lesson = { id, data, entry, editor: null, tab: 'code', fails: 0, busy: false, stage: 0, exercisePassed: false };
     S.quiz = null;
     const head = '<div class="lhead"><button class="iconbtn" data-a="back" aria-label="' + t('close') + '">' + icon('x') + '</button><div class="seg4">' +
       [t('st_theory'), t('st_examples'), t('st_practice'), t('st_quiz')].map((n, i) => '<button data-a="stageGo" data-s="' + i + '" class="' + (i === 0 ? 'on' : '') + '" aria-label="' + esc(n) + '"></button>').join('') + '</div>' +
@@ -222,7 +222,7 @@
         (x.stdin ? '<div class="small muted">' + t('stdin') + ':</div><pre class="out wait">' + esc(x.stdin) + '</pre>' : '') +
         (x.steps.length ? '<ol class="steps">' + x.steps.map((st) => '<li>' + PT.richText(st) + '</li>').join('') + '</ol>' : '') +
         '<div class="small muted mt">' + t('expected_output') + ':</div><pre class="out">' + esc(x.output.replace(/\n$/, '') || t('no_output')) + '</pre>' +
-        '<div id="exout' + i + '"></div><button class="btn sm mt" data-a="runExample" data-i="' + i + '">' + icon('play', 'sm') + t('run_example') + '</button></div>';
+        '<div id="exout' + i + '"></div></div>';
     });
     const practice = '<div class="stagename">' + t('st_practice') + '</div><div class="sec task" id="exsec"><div class="label">' + icon('terminal', 'sm') + t('exercise') + '</div><p style="font-size:16px">' + PT.richText(ex.prompt) + '</p>' +
       '<div class="tabs2"><button data-a="extab" data-tab="code" class="on">' + t('code_tab') + '</button><button data-a="extab" data-tab="result">' + t('result_tab') + '</button></div>' +
@@ -231,7 +231,7 @@
       '<div id="hintbox" class="sec note mt" hidden>' + PT.richText(ex.hint) + '</div></div>' +
       '<div id="tab-result" hidden><div id="resbox"><div class="muted small">' + t('no_output') + '</div></div></div>' +
       '<div class="toolbar"><button class="iconbtn" data-a="hint" aria-label="' + t('hint') + '">' + icon('help') + '</button><button class="iconbtn" data-a="exReset" aria-label="' + t('reset') + '">' + icon('refresh') + '</button>' +
-      '<button class="btn" id="runbtn" data-a="exRun">' + icon('play', 'sm') + t('run') + '</button><button class="btn primary" id="subbtn" data-a="exSubmit">' + t('submit') + '</button></div><div id="solbox"></div></div>';
+      '<button class="btn primary" id="runbtn" data-a="exSubmit">' + icon('play', 'sm') + t('run') + '</button></div><div id="solbox"></div></div>';
     const html = head + '<div class="stage" data-s="0">' + theory + '</div><div class="stage" data-s="1" hidden>' + examples + '</div><div class="stage" data-s="2" hidden>' + practice + '</div>' +
       '<div class="stage" data-s="3" hidden><div class="stagename">' + t('st_quiz') + '</div><div class="sec" id="quizbox"></div></div>' +
       '<div class="dock"><button class="btn back" id="dback" data-a="stagePrev" hidden aria-label="' + t('prev') + '">' + icon('left') + '</button><button class="btn primary" id="dnext" data-a="stageNext">' + t('continue') + icon('right', 'sm') + '</button></div>';
@@ -250,10 +250,14 @@
     document.querySelectorAll('.seg4 button').forEach((b, i) => { b.className = i < L.stage ? 'done' : i === L.stage ? 'on' : ''; });
     const back = $('#dback'), next = $('#dnext');
     if (back) back.hidden = L.stage === 0;
-    if (next) next.innerHTML = L.stage === 3 ? t('finish') : t('continue') + icon('right', 'sm');
+    if (next) {
+      next.innerHTML = L.stage === 3 ? t('finish') : t('continue') + icon('right', 'sm');
+      // The exercise has its own Run/Check button; no redundant Continue button.
+      next.hidden = L.stage === 2;
+    }
     $screen().scrollTop = 0;
   }
-  A.stageNext = () => { if (S.lesson.stage < 3) showStage(S.lesson.stage + 1); else location.hash = '#/path'; };
+  A.stageNext = () => { if (S.lesson.stage === 2) return; if (S.lesson.stage < 3) showStage(S.lesson.stage + 1); else location.hash = '#/path'; };
   A.stagePrev = () => showStage(S.lesson.stage - 1);
   A.stageGo = (d) => showStage(Number(d.s));
   function celebrate(entry) {
@@ -284,9 +288,9 @@
   }
   function setBusy(b) {
     S.lesson && (S.lesson.busy = b);
-    const run = $('#runbtn'), sub = $('#subbtn');
+    const run = $('#runbtn');
     if (run) { run.innerHTML = b ? icon('stop', 'sm') + t('stop') : icon('play', 'sm') + t('run'); run.dataset.a = b ? 'exStop' : 'exRun'; }
-    if (sub) sub.disabled = b;
+    if (run) run.disabled = b;
   }
   A.extab = (d) => {
     S.lesson.tab = d.tab;
@@ -325,6 +329,7 @@
     const chk = PT.checkExercise(ex, code, runs);
     const wasDone = !!P.completed[L.id];
     const gained = PT.recordExercise(P, L.id, chk.passed);
+    L.exercisePassed = !!chk.passed;
     Progress.save();
     let h = '<div class="sec ' + (chk.passed ? 'goal' : 'mistake') + '"><div class="label">' + icon(chk.passed ? 'check' : 'x', 'sm') + (chk.passed ? t('exercise_ok') : t('test_failed')) + '</div>';
     chk.tests.forEach((r, i) => {
@@ -342,6 +347,8 @@
       Sound.play('ok');
       if (gained) toast('+' + gained + ' ' + t('pts'), 'ok');
       if (P.completed[L.id] && !wasDone) { $('#donechip').innerHTML = chip(t('lesson_done'), 'g', 'check'); setTimeout(() => celebrate(L.entry), 900); }
+      // A successful exercise proceeds directly to the quiz; no extra Continue/Submit button.
+      setTimeout(() => { if (S.lesson === L && L.exercisePassed) showStage(3); }, 350);
     } else {
       Sound.play('bad'); L.fails++;
       if (L.fails >= 2) $('#solbox').innerHTML = '<button class="btn sm" data-a="exSolution">' + icon('help', 'sm') + t('show_solution') + '</button>';
@@ -353,12 +360,7 @@
     $('#solbox').innerHTML = '<div class="small muted">' + t('solution') + ':</div>' + codeBlock(ex.solution) + '<button class="btn sm mt" data-a="useSolution">' + t('code_tab') + '</button>';
   };
   A.useSolution = () => { S.lesson.editor.setValue(S.lesson.data.exercise.solution); A.extab({ tab: 'code' }); };
-  A.runExample = async (d, el) => {
-    const x = S.lesson.data.examples[Number(d.i)], box = $('#exout' + d.i);
-    el.disabled = true; box.innerHTML = '<div class="row mt"><span class="spin"></span>' + t('running') + '</div>';
-    try { const res = await Py.run(x.code, x.stdin, 10); box.innerHTML = '<div class="small muted mt">' + t('your_run') + ':</div>' + renderRun(res); } catch (e) { box.innerHTML = '<p class="err">' + t('error_generic') + '</p>'; }
-    el.disabled = false;
-  };
+
 
   /* quiz */
   function renderQuiz() {
@@ -366,49 +368,81 @@
     const L = S.lesson, P = Progress.get(), q = S.quiz, best = P.quiz[L.id];
     const head = '<div class="label">' + icon('award', 'sm') + t('quiz') + '</div>';
     if (!q) {
-      box.innerHTML = head + (best ? '<p class="muted small">' + t('score') + ': ' + best.best + '/' + best.total + '</p>' : '') +
-        '<button class="btn primary block" data-a="quizStart">' + t('quiz_start') + '</button>'; return;
+      // Start immediately when the learner enters the quiz stage.
+      startQuiz(L.data.quiz, false);
+      return;
     }
     if (q.finished) {
       const s = q.summary;
       box.innerHTML = head + '<div class="center"><div class="ring" style="--p:' + Math.round(s.ratio * 100) + ';margin:6px auto"><b>' + s.correct + '/' + s.total + '</b></div><h3 class="mt">' + (s.passed ? t('quiz_pass') : t('quiz_fail')) + '</h3>' +
-        (q.gained ? '<p class="ok">+' + q.gained + ' ' + t('pts') + '</p>' : '') + '</div><div class="row mt">' +
-        (s.correct < s.total ? '<button class="btn grow" data-a="quizWrong">' + t('retry_wrong') + '</button>' : '') + '<button class="btn grow primary" data-a="quizStart">' + t('retry_all') + '</button></div>'; return;
+        '<p class="muted">' + 'Дуруст: ' + s.correct + ' · Хато: ' + (s.total - s.correct + (q.wrongAttempts || 0)) + '</p>' +
+        (q.gained ? '<p class="ok">+' + q.gained + ' ' + t('pts') + '</p>' : '') +
+        (s.passed ? '' : '<p class="muted">Барои гирифтани хол ба ҳамаи саволҳо дуруст ҷавоб деҳ.</p>') +
+        '<button class="btn primary block mt" data-a="quizStart">' + t('retry_all') + '</button></div>';
+      return;
     }
     const it = q.items[q.i], n = q.items.length;
     box.innerHTML = head + '<div class="row between small muted"><span>' + t('question_of') + ' ' + (q.i + 1) + '/' + n + '</span></div><div class="mt">' + bar(q.i / n * 100) + '</div>' +
       '<h3 class="mt">' + PT.richText(it.q) + '</h3>' +
       it.options.map((o, i) => {
-        const cls = q.picked == null ? '' : o.correct ? 'good' : i === q.picked ? 'bad' : '';
-        return '<button class="opt ' + cls + '" data-a="qpick" data-i="' + i + '" ' + (q.picked != null ? 'disabled' : '') + '>' + esc(o.text) + '</button>';
+        const cls = q.picked == null ? '' : (o.correct ? 'good' : (i === q.picked ? 'bad' : ''));
+        const disabled = q.picked != null && q.lastCorrect;
+        return '<button class="opt ' + cls + '" data-a="qpick" data-i="' + i + '" ' + (disabled ? 'disabled' : '') + '>' + esc(o.text) + '</button>';
       }).join('') +
-      (q.picked != null ? '<div class="sec ' + (it.options[q.picked].correct ? 'goal' : 'mistake') + '"><div class="label">' + (it.options[q.picked].correct ? t('correct') : t('wrong')) + '</div>' + PT.richText(it.explanation) +
-        '</div><button class="btn primary block" data-a="qnext">' + (q.i === n - 1 ? t('finish') : t('next')) + '</button>' : '');
+      (q.picked != null ? '<div class="sec ' + (q.lastCorrect ? 'goal' : 'mistake') + '"><div class="label">' +
+        (q.lastCorrect ? t('correct') : t('wrong')) + '</div>' + PT.richText(it.explanation) + '</div>' +
+        (q.lastCorrect ? '<p class="small muted">Гузариш ба саволи нав…</p>' :
+          '<button class="btn primary block" data-a="qretry">Боз кӯшиш кардан</button>') : '');
   }
-  function startQuiz(items, practice) { S.quiz = { items: PT.buildQuiz(items), i: 0, results: [], picked: null, finished: false, practice }; renderQuiz(); }
+  function startQuiz(items, practice) {
+    S.quiz = { items: PT.buildQuiz(items), i: 0, results: [], picked: null, lastCorrect: false, finished: false, practice, wrongAttempts: 0 };
+    renderQuiz();
+  }
   A.quizStart = () => startQuiz(S.lesson.data.quiz, false);
-  A.quizWrong = () => {
-    const wrong = S.quiz.items.filter((_, i) => !S.quiz.results[i]).map((it) => S.lesson.data.quiz[it.index]);
-    startQuiz(wrong, true);
-  };
-  A.qpick = (d) => {
-    const q = S.quiz; if (q.picked != null) return;
-    q.picked = Number(d.i);
-    const ok = q.items[q.i].options[q.picked].correct;
-    q.results[q.i] = ok; Sound.play(ok ? 'ok' : 'bad'); renderQuiz();
+  A.qretry = () => {
+    const q = S.quiz;
+    if (!q || q.finished || q.lastCorrect) return;
+    q.picked = null;
+    renderQuiz();
   };
   A.qnext = () => {
     const q = S.quiz;
-    if (q.i < q.items.length - 1) { q.i++; q.picked = null; renderQuiz(); return; }
-    q.finished = true; q.summary = PT.scoreQuiz(q.results);
-    if (!q.practice) {
+    if (!q || q.finished || !q.lastCorrect) return;
+    if (q.i < q.items.length - 1) {
+      q.i++; q.picked = null; q.lastCorrect = false; renderQuiz(); return;
+    }
+    q.finished = true;
+    q.summary = PT.scoreQuiz(q.results);
+    // No points or quiz completion until every question is answered correctly.
+    q.summary.passed = q.summary.correct === q.summary.total && q.summary.total > 0;
+    if (!q.practice && q.summary.passed) {
       const P = Progress.get(), was = !!P.completed[S.lesson.id];
       q.gained = PT.recordQuiz(P, S.lesson.id, q.summary); Progress.save();
-      if (P.completed[S.lesson.id] && !was) { $('#donechip').innerHTML = chip(t('lesson_done'), 'g', 'check'); const en = S.lesson.entry; setTimeout(() => celebrate(en), 900); }
+      if (P.completed[S.lesson.id] && !was) {
+        $('#donechip').innerHTML = chip(t('lesson_done'), 'g', 'check');
+        const en = S.lesson.entry; setTimeout(() => celebrate(en), 900);
+      }
     }
     renderQuiz();
   };
-
+  A.qpick = (d) => {
+    const q = S.quiz; if (!q || q.finished || q.lastCorrect || q.picked != null) return;
+    q.picked = Number(d.i);
+    const ok = !!q.items[q.i].options[q.picked].correct;
+    if (ok) {
+      q.results[q.i] = true;
+      q.lastCorrect = true;
+      Sound.play('ok');
+      renderQuiz();
+      setTimeout(() => { if (S.quiz === q) A.qnext(); }, 650);
+    } else {
+      q.wrongAttempts = (q.wrongAttempts || 0) + 1;
+      q.picked = Number(d.i);
+      q.lastCorrect = false;
+      Sound.play('bad');
+      renderQuiz();
+    }
+  };
   /* ---------- downloads ---------- */
   async function doDownload(id) {
     S.dl[id] = 'busy'; refresh();
