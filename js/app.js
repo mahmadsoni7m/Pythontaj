@@ -194,6 +194,8 @@
     if (!PT.isUnlocked(E, idx, P)) { setTimeout(() => toast(t('locked_toast')), 50); location.replace('#/path'); return null; }
     const data = await Content.getLesson(id);
     Progress.touchRecent(id); Content.markSeen(id);
+    // Remember the most recently opened lesson for quick resume later.
+    DB.setKV('kv', 'lastLesson', id).catch(() => {});
     const bm = P.bookmarks.includes(id);
     if (!data) {
       const busy = S.dl[id] === 'busy', fail = S.dl[id] === 'fail';
@@ -238,8 +240,11 @@
     return { tab: null, dock: true, html, after: async () => {
       const draft = await DB.getKV('kv', 'draft:' + id, null);
       let timer;
-      S.lesson.editor = createEditor($('#edhost'), { value: draft != null ? draft : ex.starter, height: 240,
-        onChange: (v) => { clearTimeout(timer); timer = setTimeout(() => DB.setKV('kv', 'draft:' + id, v), 600); } });
+      let latestDraft = draft != null ? draft : ex.starter;
+      const saveDraft = () => DB.setKV('kv', 'draft:' + id, latestDraft).catch(() => {});
+      S.lesson.editor = createEditor($('#edhost'), { value: latestDraft, height: 240,
+        onChange: (v) => { latestDraft = v; clearTimeout(timer); timer = setTimeout(saveDraft, 600); } });
+      S.cleanup = () => { clearTimeout(timer); saveDraft(); };
       renderQuiz();
     } };
   }
@@ -253,7 +258,7 @@
     if (next) {
       next.innerHTML = L.stage === 3 ? t('finish') : t('continue') + icon('right', 'sm');
       // The exercise has its own Run/Check button; no redundant Continue button.
-      next.hidden = L.stage === 2 || L.stage === 3;
+      next.hidden = L.stage === 2;
     }
     $screen().scrollTop = 0;
   }
@@ -289,7 +294,7 @@
   function setBusy(b) {
     S.lesson && (S.lesson.busy = b);
     const run = $('#runbtn');
-    if (run) { run.innerHTML = b ? icon('stop', 'sm') + t('stop') : icon('play', 'sm') + t('run'); run.dataset.a = b ? 'exStop' : 'exSubmit'; }
+    if (run) { run.innerHTML = b ? icon('stop', 'sm') + t('stop') : icon('play', 'sm') + t('run'); run.dataset.a = b ? 'exStop' : 'exRun'; }
     if (run) run.disabled = b;
   }
   A.extab = (d) => {
@@ -368,14 +373,14 @@
     const L = S.lesson, P = Progress.get(), q = S.quiz, best = P.quiz[L.id];
     const head = '<div class="label">' + icon('award', 'sm') + t('quiz') + '</div>';
     if (!q) {
-      box.innerHTML = head + (best ? '<p class="muted small">' + t('score') + ': ' + best.best + '/' + best.total + '</p>' : '') +
-        '<button class="btn primary block" data-a="quizStart">' + t('quiz_start') + '</button>';
+      // Start immediately when the learner enters the quiz stage.
+      startQuiz(L.data.quiz, false);
       return;
     }
     if (q.finished) {
       const s = q.summary;
       box.innerHTML = head + '<div class="center"><div class="ring" style="--p:' + Math.round(s.ratio * 100) + ';margin:6px auto"><b>' + s.correct + '/' + s.total + '</b></div><h3 class="mt">' + (s.passed ? t('quiz_pass') : t('quiz_fail')) + '</h3>' +
-        '<p class="muted">Дуруст: ' + s.correct + ' · Хато: ' + (q.wrongAttempts || 0) + '</p>' +
+        '<p class="muted">' + 'Дуруст: ' + s.correct + ' · Хато: ' + (s.total - s.correct + (q.wrongAttempts || 0)) + '</p>' +
         (q.gained ? '<p class="ok">+' + q.gained + ' ' + t('pts') + '</p>' : '') +
         (s.passed ? '' : '<p class="muted">Барои гирифтани хол ба ҳамаи саволҳо дуруст ҷавоб деҳ.</p>') +
         '<button class="btn primary block mt" data-a="quizStart">' + t('retry_all') + '</button></div>';
@@ -386,11 +391,12 @@
       '<h3 class="mt">' + PT.richText(it.q) + '</h3>' +
       it.options.map((o, i) => {
         const cls = q.picked == null ? '' : (o.correct ? 'good' : (i === q.picked ? 'bad' : ''));
-        return '<button class="opt ' + cls + '" data-a="qpick" data-i="' + i + '" ' + (q.picked != null ? 'disabled' : '') + '>' + esc(o.text) + '</button>';
+        const disabled = q.picked != null && q.lastCorrect;
+        return '<button class="opt ' + cls + '" data-a="qpick" data-i="' + i + '" ' + (disabled ? 'disabled' : '') + '>' + esc(o.text) + '</button>';
       }).join('') +
       (q.picked != null ? '<div class="sec ' + (q.lastCorrect ? 'goal' : 'mistake') + '"><div class="label">' +
         (q.lastCorrect ? t('correct') : t('wrong')) + '</div>' + PT.richText(it.explanation) + '</div>' +
-        (q.lastCorrect ? '<button class="btn primary block" data-a="qnext">' + (q.i === n - 1 ? t('finish') : t('next')) + '</button>' :
+        (q.lastCorrect ? '<p class="small muted">Гузариш ба саволи нав…</p>' :
           '<button class="btn primary block" data-a="qretry">Боз кӯшиш кардан</button>') : '');
   }
   function startQuiz(items, practice) {
@@ -433,6 +439,7 @@
       q.lastCorrect = true;
       Sound.play('ok');
       renderQuiz();
+      setTimeout(() => { if (S.quiz === q) A.qnext(); }, 650);
     } else {
       q.wrongAttempts = (q.wrongAttempts || 0) + 1;
       q.picked = Number(d.i);
@@ -560,13 +567,22 @@
   A.ftab = (d) => { $('#fcode').hidden = d.tab !== 'code'; $('#fres').hidden = d.tab !== 'result'; document.querySelectorAll('.tabs2 button').forEach((b) => b.classList.toggle('on', b.dataset.tab === d.tab)); };
   A.fStop = () => Py.stop();
   A.fRun = async () => {
-    const F = S.file; if (F.busy) return; F.busy = true;
-    const btn = $('#frun'); btn.innerHTML = icon('stop', 'sm') + t('stop'); btn.dataset.a = 'fStop';
-    A.ftab({ tab: 'result' }); $('#resbox').innerHTML = '<div class="row"><span class="spin"></span>' + t('running') + '</div>';
-    await saveFile();
-    try { const res = await Py.run(F.editor.getValue(), $('#fstdin').value, 10); if (!res.unavailable) { Progress.get().stats.runs++; Progress.save(); } $('#resbox').innerHTML = renderRun(res); }
-    catch (e) { $('#resbox').innerHTML = '<p class="err">' + t('error_generic') + '</p>'; }
-    F.busy = false; btn.innerHTML = icon('play', 'sm') + t('run'); btn.dataset.a = 'fRun';
+    const F = S.file; if (!F || !F.editor || F.busy) return; F.busy = true;
+    const btn = $('#frun');
+    if (btn) { btn.innerHTML = icon('stop', 'sm') + t('stop'); btn.dataset.a = 'fStop'; }
+    A.ftab({ tab: 'result' });
+    const box = $('#resbox'); if (box) box.innerHTML = '<div class="row"><span class="spin"></span>' + t('running') + '</div>';
+    try {
+      await saveFile();
+      const stdin = $('#fstdin');
+      const res = await Py.run(F.editor.getValue(), stdin ? stdin.value : '', 10);
+      if (!res.unavailable) { Progress.get().stats.runs++; Progress.save(); }
+      if ($('#resbox')) $('#resbox').innerHTML = renderRun(res);
+    } catch (e) { if ($('#resbox')) $('#resbox').innerHTML = '<p class="err">' + t('error_generic') + '</p>'; }
+    finally {
+      F.busy = false;
+      if ($('#frun')) { $('#frun').innerHTML = icon('play', 'sm') + t('run'); $('#frun').dataset.a = 'fRun'; }
+    }
   };
   function consoleScreen() {
     const draw = () => S.console.log.map((e) => '<div class="mb"><pre class="code"><span class="tk-kw">&gt;&gt;&gt;</span> ' + esc(e.src) + '</pre>' + (e.res ? renderRun(Object.assign({}, e.res, { ok: e.res.ok })) : '') + '</div>').join('');
