@@ -390,3 +390,473 @@ input.field:focus,textarea.stdin:focus{box-shadow:var(--focus-ring)}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+/* ========================================
+   PythonTaj — Professional Animations
+   Ба охири app.css илова кун
+======================================== */
+
+/* 1. Пайдо шудани элементҳо */
+@keyframes ptFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes ptScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes ptSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 2. Кортҳо ва блокҳо */
+.card,
+.lesson-card,
+.example-card,
+.exercise-card,
+.quiz-card,
+.practice-card,
+.task-card {
+    animation: ptFadeIn 0.4s ease both;
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* Эффект барои компютер ва дастгоҳҳои дорои hover */
+@media (hover: hover) {
+    .card:hover,
+    .lesson-card:hover,
+    .example-card:hover,
+    .exercise-card:hover,
+    .quiz-card:hover,
+    .practice-card:hover,
+    .task-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(100, 70, 255, 0.12);
+    }
+}
+
+/* 3. Ҳамаи тугмаҳо */
+button,
+.btn,
+.button {
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.22s ease,
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        opacity 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:active,
+.btn:active,
+.button:active {
+    transform: scale(0.97);
+}
+
+button:focus-visible,
+.btn:focus-visible,
+.button:focus-visible {
+    outline: 2px solid #8870ff;
+    outline-offset: 3px;
+}
+
+/* 4. Тугмаҳои асосии бунафш */
+.btn-primary,
+.primary-btn,
+button.primary,
+button[type="submit"] {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+@media (hover: hover) {
+    .btn-primary:hover,
+    .primary-btn:hover,
+    button.primary:hover,
+    button[type="submit"]:hover {
+        filter: brightness(1.08);
+        box-shadow: 0 6px 22px rgba(111, 76, 255, 0.3);
+    }
+}
+
+/* 5. Ҷойҳои навиштани код ва матн */
+textarea,
+input,
+.code-editor,
+.editor {
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+textarea:focus,
+input:focus,
+.code-editor:focus-within,
+.editor:focus-within {
+    outline: none;
+    border-color: #7860ff;
+    box-shadow: 0 0 0 3px rgba(120, 96, 255, 0.15);
+}
+
+/* 6. Пайдо шудани натиҷаи иҷро */
+.result,
+.output,
+.result-box,
+.exercise-result {
+    animation: ptFadeIn 0.3s ease both;
+}
+
+/* 7. Ҷавоби дуруст */
+.correct,
+.answer-correct,
+.is-correct {
+    animation: ptScaleIn 0.25s ease both;
+    border-color: #24c99a !important;
+}
+
+/* 8. Ҷавоби хато */
+.incorrect,
+.answer-incorrect,
+.is-incorrect {
+    animation: ptShake 0.35s ease both;
+    border-color: #ff6378 !important;
+}
+
+@keyframes ptShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-4px);
+    }
+    50% {
+        transform: translateX(4px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
+}
+
+/* 9. Пешрафти дарс ва викторина */
+.progress-bar,
+.progress-fill,
+.progress-inner {
+    transition: width 0.4s ease;
+}
+
+/* 10. Пайдо шудани саволи нав */
+.question,
+.quiz-question,
+.question-card {
+    animation: ptSlideIn 0.3s ease both;
+}
+
+/* 11. Ҷадвалҳо ва блокҳои код */
+pre,
+.code-block,
+.code-container {
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+@media (hover: hover) {
+    pre:hover,
+    .code-block:hover,
+    .code-container:hover {
+        border-color: rgba(130, 105, 255, 0.35);
+    }
+}
+
+/* 12. Ҳолати боркунӣ */
+.loading,
+.is-loading {
+    animation: ptPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes ptPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.55;
+    }
+}
+
+/* 13. Меню ва панелҳо */
+.modal,
+.dialog,
+.dropdown,
+.popup {
+    animation: ptScaleIn 0.22s ease both;
+}
+
+/* 14. Мутобиқ ба телефон */
+@media (max-width: 600px) {
+    .card,
+    .lesson-card,
+    .example-card,
+    .exercise-card,
+    .quiz-card,
+    .practice-card,
+    .task-card {
+        animation-duration: 0.3s;
+    }
+}
+
+/* 15. Эҳтироми танзимоти кам кардани аниматсия */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+       }
+/* ==================================
+   PythonTaj — Professional Lesson List
+================================== */
+
+@keyframes lessonAppear {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes lessonGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(124, 92, 255, 0);
+    }
+    50% {
+        box-shadow: 0 0 18px rgba(124, 92, 255, 0.12);
+    }
+}
+
+/* Рӯйхати дарсҳо */
+.lesson-list,
+.lessons-list,
+#lessonList,
+#lessons {
+    display: grid;
+    gap: 12px;
+}
+
+/* Карточкаи дарс */
+.lesson-list > *,
+.lessons-list > *,
+#lessonList > *,
+#lessons > *,
+.lesson-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid rgba(150, 130, 255, 0.15);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124, 92, 255, 0.07),
+            rgba(255, 255, 255, 0.015)
+        );
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+    animation: lessonAppear 0.4s ease both;
+}
+
+/* Равшании канори карточка */
+.lesson-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12%;
+    bottom: 12%;
+    width: 3px;
+    border-radius: 0 4px 4px 0;
+    background: #8b70ff;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+/* Hover барои дастгоҳҳои мувофиқ */
+@media (hover: hover) {
+    .lesson-list > *:hover,
+    .lessons-list > *:hover,
+    #lessonList > *:hover,
+    #lessons > *:hover,
+    .lesson-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(139, 112, 255, 0.5);
+        box-shadow: 0 8px 24px rgba(90, 65, 210, 0.12);
+    }
+
+    .lesson-card:hover::before {
+        opacity: 1;
+    }
+}
+
+/* Ҳангоми пахш дар телефон */
+.lesson-list > *:active,
+.lessons-list > *:active,
+.lesson-card:active {
+    transform: scale(0.985);
+}
+
+/* Рақами дарс */
+.lesson-number,
+.lesson-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border-radius: 10px;
+    background: rgba(139, 112, 255, 0.12);
+    color: #b8a7ff;
+    font-weight: 700;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Номи дарс */
+.lesson-title {
+    font-weight: 650;
+    line-height: 1.45;
+    letter-spacing: 0.1px;
+}
+
+/* Тавсифи дарс */
+.lesson-description {
+    opacity: 0.72;
+    line-height: 1.6;
+}
+
+/* Дарси гузашта */
+.lesson-card.completed,
+.lesson-card.is-completed {
+    border-color: rgba(40, 210, 155, 0.28);
+}
+
+.lesson-card.completed::before,
+.lesson-card.is-completed::before {
+    background: #29d39b;
+    opacity: 1;
+}
+
+/* Дарси ҷорӣ */
+.lesson-card.current,
+.lesson-card.active,
+.lesson-card.is-current {
+    border-color: rgba(139, 112, 255, 0.65);
+    animation: lessonAppear 0.4s ease both,
+               lessonGlow 3s ease-in-out infinite;
+}
+
+.lesson-card.current::before,
+.lesson-card.active::before,
+.lesson-card.is-current::before {
+    opacity: 1;
+}
+
+/* Дарси қулфшуда */
+.lesson-card.locked,
+.lesson-card.is-locked {
+    opacity: 0.58;
+    filter: saturate(0.65);
+}
+
+/* Нишондиҳандаи пешрафти дарс */
+.lesson-progress {
+    height: 5px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.lesson-progress > * {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #7857ff, #b29aff);
+    transition: width 0.45s ease;
+}
+
+/* Тугмаи кушодани дарс */
+.lesson-card button,
+.lesson-card .btn {
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+.lesson-card button:active,
+.lesson-card .btn:active {
+    transform: scale(0.96);
+}
+
+/* Телефон */
+@media (max-width: 600px) {
+    .lesson-list,
+    .lessons-list,
+    #lessonList,
+    #lessons {
+        gap: 10px;
+    }
+
+    .lesson-list > *,
+    .lessons-list > *,
+    #lessonList > *,
+    #lessons > *,
+    .lesson-card {
+        border-radius: 14px;
+    }
+}
+
+/* Кам кардани аниматсия мувофиқи танзимоти дастгоҳ */
+@media (prefers-reduced-motion: reduce) {
+    .lesson-list > *,
+    .lessons-list > *,
+    #lessonList > *,
+    #lessons > *,
+    .lesson-card,
+    .lesson-card::before {
+        animation: none !important;
+        transition: none !important;
+    }
+   }
