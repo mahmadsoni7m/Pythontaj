@@ -327,3 +327,66 @@ textarea.stdin{min-height:56px} input.field{font-family:inherit;font-size:16px} 
 #screen {
   overflow-x: hidden;
 }
+
+
+/* ===== PythonTaj polish pack: subtle depth, clearer hierarchy, better touch states ===== */
+:root{
+  --surface-glow: rgba(124,92,255,.14);
+  --focus-ring: 0 0 0 3px rgba(124,92,255,.22);
+}
+
+/* More deliberate spacing and smoother card surfaces */
+.card,.sec,.stat,.medal{
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.card:not(.hero){
+  border-color: color-mix(in srgb, var(--line) 78%, rgba(124,92,255,.25));
+}
+.card.tap:hover{border-color:rgba(124,92,255,.38);box-shadow:var(--shadow),0 0 0 1px rgba(124,92,255,.06)}
+
+/* Stronger, cleaner button feedback without changing layout */
+.btn,.iconbtn,.keys button,.opt{
+  touch-action:manipulation;
+  -webkit-user-select:none;
+  user-select:none;
+}
+.btn:focus-visible,.iconbtn:focus-visible,.opt:focus-visible,
+.keys button:focus-visible,.tabs2 button:focus-visible{
+  outline:0;
+  box-shadow:var(--focus-ring),0 4px 0 rgba(0,0,0,.25);
+}
+.btn.primary{
+  background-image:linear-gradient(135deg,rgba(255,255,255,.10),transparent 48%),var(--grad);
+  letter-spacing:.01em;
+}
+.btn[disabled],.opt[disabled]{filter:saturate(.72)}
+
+/* Lesson step indicator: clearer active and completed states */
+.seg4 button{transition:background .25s ease, transform .25s ease, box-shadow .25s ease}
+.seg4 button.on{box-shadow:0 0 12px rgba(124,92,255,.28)}
+.seg4 button.done{box-shadow:0 0 10px rgba(53,224,161,.12)}
+
+/* Code and output areas feel more like a focused learning environment */
+.win{box-shadow:0 10px 26px rgba(0,0,0,.16);border-color:rgba(255,255,255,.09)}
+.win .bar2{min-height:38px;letter-spacing:.02em}
+pre.out{padding:14px 15px;line-height:1.7}
+.ed{box-shadow:0 8px 24px rgba(0,0,0,.12);transition:border-color .2s ease,box-shadow .2s ease}
+.ed:focus-within{box-shadow:var(--focus-ring),0 8px 24px rgba(0,0,0,.12)}
+input.field:focus,textarea.stdin:focus{box-shadow:var(--focus-ring)}
+
+/* Quiz answers: readable selection states and a softer transition */
+.opt{position:relative;min-height:58px;line-height:1.45;transition:transform .12s ease,border-color .18s ease,background .18s ease,box-shadow .12s ease}
+.opt:not([disabled]):hover{border-color:rgba(124,92,255,.48);background:color-mix(in srgb,var(--s2) 88%,var(--p1))}
+.opt.good{border-color:var(--green);background:rgba(53,224,161,.13);box-shadow:0 4px 0 #16865e,0 0 0 1px rgba(53,224,161,.08)}
+.opt.bad{border-color:var(--red);background:rgba(255,107,129,.13);box-shadow:0 4px 0 #a9364b,0 0 0 1px rgba(255,107,129,.08)}
+
+/* Feedback panels are easier to distinguish at a glance */
+.sec.goal,.toast.ok{box-shadow:0 8px 24px rgba(53,224,161,.06)}
+.sec.mistake,.toast.err{box-shadow:0 8px 24px rgba(255,107,129,.06)}
+
+/* Avoid motion overload for users who prefer reduced animation */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
