@@ -173,12 +173,268 @@ textarea.stdin{min-height:56px} input.field{font-family:inherit;font-size:16px} 
 .opt.good{border-color:var(--green);background:rgba(53,224,161,.12);box-shadow:0 4px 0 #1b9a6c} .opt.bad{border-color:var(--red);background:rgba(255,107,129,.12);box-shadow:0 4px 0 #b83d52}
 .opt[disabled]{pointer-events:none}
 /* ---------- tab bar (glass) ---------- */
-.tabbar{position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));height:var(--tab);z-index:10;display:flex;padding:6px;
-  background:rgba(18,23,48,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:26px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
-:root[data-theme=light] .tabbar{background:rgba(255,255,255,.88)}
-.tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--muted);text-decoration:none;font-size:10.5px;font-weight:700;border-radius:20px;transition:.2s}
-.tabbar a.on{color:#fff;background:var(--grad);box-shadow:0 8px 18px rgba(124,92,255,.45)}
-.tabbar a svg.i{width:22px;height:22px}
+
+/* ==========================================
+   PYTHONTaj PRO — PREMIUM MOBILE NAVBAR
+   Glassmorphism | Responsive | Dark / Light
+========================================== */
+
+:root {
+  --nav-height: 76px;
+  --nav-side: 12px;
+  --nav-bottom: 10px;
+  --nav-radius: 27px;
+
+  --nav-bg: rgba(17, 20, 43, 0.94);
+  --nav-border: rgba(255, 255, 255, 0.13);
+  --nav-text: #969dbb;
+  --nav-text-active: #ffffff;
+
+  --nav-accent: #765cff;
+  --nav-accent-2: #6044f2;
+  --nav-glow: rgba(105, 84, 255, 0.35);
+
+  --nav-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  --nav-transition: 220ms cubic-bezier(.2, .8, .2, 1);
+}
+
+/* Асоси Navbar */
+#tabbar.tabbar {
+  position: fixed;
+  left: var(--nav-side);
+  right: var(--nav-side);
+  bottom: calc(var(--nav-bottom) + env(safe-area-inset-bottom));
+
+  height: var(--nav-height);
+  padding: 7px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 5px;
+
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  border-radius: var(--nav-radius);
+
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+
+  box-shadow: var(--nav-shadow);
+
+  z-index: 1000;
+  isolation: isolate;
+  overflow: visible;
+
+  animation: navEnter 400ms ease both;
+}
+
+/* Хатти нозуки боло */
+#tabbar.tabbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 22%;
+  right: 22%;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+
+  pointer-events: none;
+}
+
+/* Navbar-и пинҳон */
+#tabbar.tabbar[hidden] {
+  display: none !important;
+}
+
+/* Ҳамаи тугмаҳо */
+#tabbar.tabbar a {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  padding: 5px 2px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  color: var(--nav-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 21px;
+
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.15;
+
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+
+  transition:
+    color var(--nav-transition),
+    background var(--nav-transition),
+    border-color var(--nav-transition),
+    box-shadow var(--nav-transition),
+    transform var(--nav-transition);
+}
+
+/* Нишонаҳо */
+#tabbar.tabbar a svg.i {
+  display: block;
+  width: 25px;
+  height: 25px;
+  flex: 0 0 auto;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  transition:
+    transform var(--nav-transition),
+    filter var(--nav-transition);
+}
+
+/* Матни тугма */
+#tabbar.tabbar a span {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ҳолати интихобшуда */
+#tabbar.tabbar a.on {
+  color: var(--nav-text-active);
+
+  background: linear-gradient(
+    135deg,
+    var(--nav-accent),
+    var(--nav-accent-2)
+  );
+
+  border-color: rgba(255, 255, 255, 0.13);
+
+  box-shadow:
+    0 5px 18px var(--nav-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Дурахши нишонаи интихобшуда */
+#tabbar.tabbar a.on svg.i {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 2px 5px rgba(255, 255, 255, 0.2));
+}
+
+/* Hover барои дастгоҳҳои дорои муш */
+@media (hover: hover) and (pointer: fine) {
+  #tabbar.tabbar a:not(.on):hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* Аниматсияи пахш */
+#tabbar.tabbar a:active {
+  transform: scale(0.94);
+}
+
+/* Фокус барои клавиатура */
+#tabbar.tabbar a:focus-visible {
+  outline: 2px solid #a99aff;
+  outline-offset: 2px;
+}
+
+/* Режими равшан */
+:root[data-theme="light"] {
+  --nav-bg: rgba(255, 255, 255, 0.94);
+  --nav-border: rgba(40, 45, 75, 0.13);
+  --nav-text: #69718c;
+  --nav-shadow:
+    0 12px 35px rgba(25, 30, 60, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="light"] #tabbar.tabbar::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(50, 55, 90, 0.15),
+    transparent
+  );
+}
+
+:root[data-theme="light"] #tabbar.tabbar a.on {
+  color: #ffffff;
+}
+
+/* Экранҳои хурд */
+@media (max-width: 380px) {
+  #tabbar.tabbar {
+    --nav-height: 70px;
+    --nav-side: 8px;
+    --nav-radius: 24px;
+
+    padding: 6px;
+    gap: 3px;
+  }
+
+  #tabbar.tabbar a {
+    padding: 4px 1px;
+    gap: 3px;
+    font-size: 9.5px;
+    border-radius: 18px;
+  }
+
+  #tabbar.tabbar a svg.i {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+/* Аниматсияи пайдоиш */
+@keyframes navEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Барои корбароне, ки аниматсияи кам мехоҳанд */
+@media (prefers-reduced-motion: reduce) {
+  #tabbar.tabbar,
+  #tabbar.tabbar a,
+  #tabbar.tabbar a svg.i {
+    animation: none !important;
+    transition: none !important;
+  }
+                     }
+
 /* ---------- misc ---------- */
 .seg{display:flex;background:var(--s3);border-radius:13px;padding:4px} .seg button{flex:1;height:40px;border:0;border-radius:10px;background:transparent;color:var(--muted);font:700 14px inherit;font-family:inherit}
 .seg button.on{background:var(--grad);color:#fff}
